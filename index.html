@@ -1,0 +1,2021 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Plan de Contenidos · Lima Retail · Q2 2026</title>
+<link rel="stylesheet" href="lima-retail-ds.css" />
+
+<style>
+  /* ═══ Lima Retail Design System (inlined for self-contained preview) ═══ */
+  :root {
+    --sidebar-bg:    #0F172A;
+    --sidebar-text:  #CBD5E1;
+    --sidebar-muted: #475569;
+    --bg:            #F3F4F6;
+    --card:          #FFFFFF;
+    --border:        #E2E8F0;
+
+    --brand:         #2563EB;   --brand-soft:  #DBEAFE;   --brand-text:  #1D4ED8;
+    --green:         #059669;   --green-soft:  #D1FAE5;   --green-text:  #047857;
+    --amber:         #D97706;   --amber-soft:  #FEF3C7;   --amber-text:  #B45309;
+    --red:           #DC2626;   --red-soft:    #FEE2E2;   --red-text:    #B91C1C;
+    --purple:        #7C3AED;   --purple-soft: #EDE9FE;   --purple-text: #6D28D9;
+
+    --text:          #0F172A;
+    --text-2:        #475569;
+    --muted:         #94A3B8;
+
+    --font: -apple-system, BlinkMacSystemFont, "Segoe UI", "Inter", Helvetica, sans-serif;
+
+    --r-lg:  14px;
+    --r:     12px;
+    --r-sm:   8px;
+    --r-xs:   6px;
+
+    --sh:       0 1px 3px  rgba(15,23,42,.06);
+    --sh2:      0 4px 14px rgba(15,23,42,.08);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    font-size: 13px;
+    line-height: 1.45;
+  }
+  button, input, select, textarea { font-family: inherit; }
+  a { color: var(--brand); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  .shell { min-height: 100vh; display: flex; }
+
+  .sidebar {
+    width: 240px;
+    background: var(--sidebar-bg);
+    color: var(--sidebar-text);
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    position: sticky;
+    top: 0;
+    max-height: 100vh;
+    overflow-y: auto;
+  }
+  .s-brand { padding: 20px 20px 18px; border-bottom: 1px solid rgba(255,255,255,.06); margin-bottom: 10px; }
+  .s-title { font-size: 15px; font-weight: 600; color: #fff; letter-spacing: -.01em; }
+  .s-sub   { font-size: 12px; color: #64748B; margin-top: 2px; }
+  .s-group-lbl {
+    font-size: 10px; text-transform: uppercase; color: var(--sidebar-muted);
+    letter-spacing: .08em; padding: 10px 22px 6px; font-weight: 600;
+  }
+  .s-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 8px 14px; margin: 0 8px;
+    border-radius: var(--r-sm);
+    color: var(--sidebar-text);
+    font-size: 13px; cursor: pointer;
+    text-decoration: none;
+    transition: background .15s;
+  }
+  .s-item:hover  { background: rgba(255,255,255,.04); color: #fff; text-decoration: none; }
+  .s-item.active { background: rgba(37,99,235,.14); color: #60A5FA; }
+  .s-div { border: none; border-top: 1px solid rgba(255,255,255,.06); margin: 6px 12px; }
+  .s-footer {
+    padding: 14px 20px; font-size: 11px; color: #334155;
+    border-top: 1px solid rgba(255,255,255,.06); margin-top: auto;
+  }
+
+  .main { flex: 1; min-width: 0; display: flex; flex-direction: column; overflow-y: auto; }
+
+  .topbar {
+    padding: 18px 28px;
+    background: #fff;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: flex-start; justify-content: space-between;
+    gap: 16px; flex-wrap: wrap;
+  }
+  .topbar-title { font-size: 17px; font-weight: 600; letter-spacing: -.01em; }
+  .topbar-sub   { font-size: 12px; color: var(--text-2); margin-top: 4px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .topbar-pill {
+    display: inline-flex; align-items: center; gap: 5px;
+    background: #F1F5F9; border-radius: 20px;
+    padding: 2px 10px; font-size: 11px; color: var(--text-2);
+  }
+  .topbar-pill.live   { background: var(--green-soft); color: var(--green-text); }
+  .topbar-pill.stale  { background: var(--amber-soft); color: var(--amber-text); }
+  .topbar-pill.manual { background: #F1F5F9; color: var(--text-2); }
+  .topbar-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+  .content { padding: 22px 28px; display: flex; flex-direction: column; gap: 22px; }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 7px 14px;
+    border: 1px solid var(--border);
+    border-radius: var(--r-sm);
+    background: #fff;
+    font-size: 12px; font-weight: 500; color: var(--text-2);
+    cursor: pointer; white-space: nowrap;
+  }
+  .btn:hover { background: #F8FAFC; }
+  .btn.primary { background: var(--brand); color: #fff; border-color: var(--brand); }
+  .btn.primary:hover { background: var(--brand-text); }
+
+  .panel {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--r); padding: 18px 20px; box-shadow: var(--sh);
+  }
+  .panel-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 14px; flex-wrap: wrap; }
+  .panel-title { font-size: 14px; font-weight: 600; letter-spacing: -.01em; }
+  .panel-sub   { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+  .kpi-grid   { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  .kpi-grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  .kpi-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--r); padding: 16px 18px; box-shadow: var(--sh);
+    position: relative;
+  }
+  .kpi-icon {
+    position: absolute; top: 14px; right: 14px;
+    width: 32px; height: 32px; border-radius: var(--r-sm);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .kpi-icon.blue   { background: var(--brand-soft);  color: var(--brand-text); }
+  .kpi-icon.green  { background: var(--green-soft);  color: var(--green-text); }
+  .kpi-icon.amber  { background: var(--amber-soft);  color: var(--amber-text); }
+  .kpi-icon.red    { background: var(--red-soft);    color: var(--red-text); }
+  .kpi-icon.purple { background: var(--purple-soft); color: var(--purple-text); }
+  .kpi-lbl { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); padding-right: 42px; }
+  .kpi-val { font-size: 24px; font-weight: 600; margin-top: 6px; letter-spacing: -.02em; line-height: 1; }
+  .kpi-val.blue   { color: var(--brand); }
+  .kpi-val.green  { color: var(--green); }
+  .kpi-val.amber  { color: var(--amber); }
+  .kpi-val.red    { color: var(--red); }
+  .kpi-trend { font-size: 11px; font-weight: 600; margin-top: 6px; }
+  .kpi-trend.up   { color: var(--green); }
+  .kpi-trend.down { color: var(--red); }
+  .kpi-trend.flat { color: var(--muted); }
+  .kpi-sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+  .pill {
+    font-size: 10px; font-weight: 600; padding: 3px 9px;
+    border-radius: 20px; display: inline-flex; align-items: center; gap: 4px;
+    white-space: nowrap;
+  }
+  .pill.blue   { background: var(--brand-soft);  color: var(--brand-text); }
+  .pill.green  { background: var(--green-soft);  color: var(--green-text); }
+  .pill.amber  { background: var(--amber-soft);  color: var(--amber-text); }
+  .pill.red    { background: var(--red-soft);    color: var(--red-text); }
+  .pill.purple { background: var(--purple-soft); color: var(--purple-text); }
+  .pill.gray   { background: #F1F5F9;            color: #475569; }
+
+  .insight {
+    border-left: 3px solid; border-radius: var(--r-xs);
+    padding: 10px 14px; font-size: 12px; line-height: 1.55;
+  }
+  .insight + .insight { margin-top: 8px; }
+  .insight b { filter: brightness(.75); }
+  .insight.info { background: #EFF6FF; border-color: var(--brand); color: #1E3A8A; }
+  .insight.ok   { background: #ECFDF5; border-color: var(--green); color: #065F46; }
+  .insight.warn { background: #FFFBEB; border-color: var(--amber); color: #78350F; }
+  .insight.err  { background: #FEF2F2; border-color: var(--red);   color: #7F1D1D; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  th {
+    background: #F8FAFC; padding: 9px 12px; text-align: left;
+    font-size: 10px; font-weight: 600; text-transform: uppercase;
+    letter-spacing: .06em; color: var(--text-2);
+    border-bottom: 1px solid var(--border); white-space: nowrap;
+  }
+  td { padding: 10px 12px; border-bottom: 1px solid #F1F5F9; color: var(--text); }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #FAFBFC; }
+  td.r, th.r { text-align: right; }
+  td.c, th.c { text-align: center; }
+  .table-wrap { overflow-x: auto; }
+
+  .sec-lbl {
+    font-size: 10px; font-weight: 600; letter-spacing: .08em;
+    text-transform: uppercase; color: var(--muted);
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 8px; margin-bottom: 4px;
+  }
+
+  /* ═══ Específico de esta página ═══ */
+  .ch-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .ch-card {
+    border: 1px solid var(--border); border-radius: var(--r);
+    padding: 16px 18px; background: #FAFBFC; position: relative;
+  }
+  .ch-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    border-top-left-radius: var(--r); border-top-right-radius: var(--r);
+  }
+  .ch-ig::before { background: linear-gradient(90deg, #F59E0B, #DC2626, #C026D3); }
+  .ch-tt::before { background: linear-gradient(90deg, #06B6D4, #0F172A, #EC4899); }
+  .ch-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; padding-top: 4px; }
+  .ch-name { font-size: 14px; font-weight: 600; letter-spacing: -.01em; }
+  .ch-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 7px 0; border-bottom: 1px dashed var(--border); font-size: 12px;
+  }
+  .ch-row:last-child { border-bottom: none; }
+  .ch-lbl { color: var(--text-2); }
+  .ch-val { font-weight: 600; color: var(--text); display: inline-flex; align-items: center; gap: 8px; }
+  .ch-trend { font-size: 11px; font-weight: 600; }
+  .ch-trend.up   { color: var(--green); }
+  .ch-trend.down { color: var(--red); }
+  .ch-trend.flat { color: var(--muted); }
+
+  .axis-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .axis-card {
+    border: 1px solid var(--border); border-radius: var(--r);
+    padding: 16px 18px; box-shadow: var(--sh);
+    background: var(--card); position: relative; overflow: hidden;
+  }
+  .axis-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+  .ax-blue::before  { background: var(--brand); }
+  .ax-amber::before { background: var(--amber); }
+  .ax-green::before { background: var(--green); }
+  .axis-num { font-size: 10px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+  .axis-title { font-size: 14px; font-weight: 600; margin-bottom: 6px; letter-spacing: -.01em; }
+  .axis-meta  { font-size: 12px; color: var(--text-2); line-height: 1.55; margin-bottom: 8px; }
+  .axis-share { font-size: 11px; font-weight: 600; }
+  .ax-blue .axis-share  { color: var(--brand); }
+  .ax-amber .axis-share { color: var(--amber); }
+  .ax-green .axis-share { color: var(--green); }
+
+  .cal-day  { font-weight: 600; color: var(--text); white-space: nowrap; }
+  .cal-empty { color: var(--muted); font-style: italic; }
+
+  .action-list { list-style: none; padding: 0; margin: 0; counter-reset: act; }
+  .action-list li {
+    counter-increment: act; position: relative;
+    padding: 12px 14px 12px 46px;
+    background: #F8FAFC; border-radius: var(--r-sm);
+    margin-bottom: 8px; font-size: 13px; color: var(--text); line-height: 1.5;
+  }
+  .action-list li::before {
+    content: counter(act); position: absolute;
+    left: 12px; top: 12px; width: 22px; height: 22px;
+    border-radius: 50%; background: var(--brand-soft); color: var(--brand-text);
+    font-size: 11px; font-weight: 600;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .tc-text { font-size: 12px; color: var(--text-2); max-width: 360px; line-height: 1.45; }
+  .tc-platform-ig { color: #C026D3; font-weight: 600; font-size: 10px; text-transform: uppercase; letter-spacing: .06em; }
+  .tc-platform-tt { color: #0F172A; font-weight: 600; font-size: 10px; text-transform: uppercase; letter-spacing: .06em; }
+
+  section[id] { scroll-margin-top: 16px; }
+
+  /* ═══ Recomendaciones de reels ═══ */
+  .rec-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+  .rec-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    padding: 16px 18px;
+    box-shadow: var(--sh);
+    position: relative;
+    overflow: hidden;
+  }
+  .rec-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+  .rec-card.tt::before { background: var(--brand); }
+  .rec-card.ig::before { background: var(--purple); }
+  .rec-head {
+    display: flex; gap: 5px; flex-wrap: wrap;
+    margin-bottom: 10px;
+    padding-top: 4px;
+  }
+  .rec-title {
+    font-size: 14px; font-weight: 600;
+    margin-bottom: 6px;
+    line-height: 1.35;
+    letter-spacing: -.01em;
+    color: var(--text);
+  }
+  .rec-format {
+    font-size: 11px; color: var(--brand);
+    font-weight: 600;
+    margin-bottom: 8px;
+    background: var(--brand-soft);
+    padding: 2px 8px;
+    border-radius: 20px;
+    display: inline-block;
+  }
+  .rec-card.ig .rec-format { color: var(--purple-text); background: var(--purple-soft); }
+  .rec-rationale {
+    font-size: 12px;
+    color: var(--text-2);
+    line-height: 1.55;
+  }
+
+  /* ═══ Hook anatomy ═══ */
+  .anatomy-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  .anatomy-col {
+    padding: 12px 14px;
+    background: #FAFBFC;
+    border: 1px solid var(--border);
+    border-radius: var(--r-sm);
+    border-left: 3px solid var(--brand);
+  }
+  .anatomy-col:nth-child(2) { border-left-color: var(--amber); }
+  .anatomy-col:nth-child(3) { border-left-color: var(--green); }
+  .anatomy-col:nth-child(4) { border-left-color: var(--purple); }
+  .anatomy-lbl {
+    font-size: 10px; font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .07em;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+  .anatomy-val {
+    font-size: 13px; font-weight: 600;
+    color: var(--text);
+    margin-bottom: 6px;
+    letter-spacing: -.01em;
+  }
+  .anatomy-detail {
+    font-size: 11px;
+    color: var(--text-2);
+    line-height: 1.55;
+  }
+
+  @media (max-width: 900px) {
+    .rec-grid, .anatomy-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ═══ Filter bar (rango de fechas) ═══ */
+  .filter-bar {
+    display: flex; gap: 6px; flex-wrap: wrap;
+    align-items: center;
+    padding: 10px 12px;
+    margin-bottom: 14px;
+    background: #F8FAFC;
+    border: 1px solid var(--border);
+    border-radius: var(--r-sm);
+  }
+  .f-lbl {
+    font-size: 10px; font-weight: 600;
+    text-transform: uppercase; letter-spacing: .07em;
+    color: var(--muted);
+    margin-right: 6px;
+  }
+  .f-btn {
+    padding: 5px 11px;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: var(--r-sm);
+    font-family: inherit;
+    font-size: 12px; font-weight: 500; color: var(--text-2);
+    cursor: pointer;
+    transition: background .15s, border-color .15s, color .15s;
+  }
+  .f-btn:hover { background: #F1F5F9; }
+  .f-btn.on {
+    background: var(--brand);
+    color: #fff;
+    border-color: var(--brand);
+  }
+  .filter-summary {
+    margin-left: auto;
+    font-size: 11px;
+    color: var(--text-2);
+    padding: 2px 8px;
+    background: #fff;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+  }
+  .filter-summary b { color: var(--text); }
+
+  code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 11px; background: #F1F5F9;
+    padding: 1px 6px; border-radius: 4px; color: var(--text);
+  }
+
+  /* ═══ Charts ═══ */
+  .chart-panel {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    padding: 18px 20px;
+    box-shadow: var(--sh);
+  }
+  .chart-canvas-wrap {
+    position: relative;
+    height: 260px;
+    margin-top: 6px;
+  }
+  .chart-svg-host {
+    width: 100%;
+    height: 260px;
+    min-height: 260px;
+    display: block;
+  }
+  .chart-svg-host svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+  .chart-legend {
+    font-size: 11px;
+    color: var(--text-2);
+    margin-top: 12px;
+    line-height: 1.55;
+    background: #F8FAFC;
+    padding: 10px 12px;
+    border-radius: var(--r-sm);
+  }
+  .chart-legend b { color: var(--text); }
+
+  /* ═══ Matriz de decisiones (4 columnas) ═══ */
+  .matrix-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+  }
+  .matrix-col {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 0;
+  }
+  .matrix-head { margin-bottom: 4px; }
+  .matrix-card {
+    background: #FAFBFC;
+    border: 1px solid var(--border);
+    border-radius: var(--r-sm);
+    padding: 11px 13px;
+  }
+  .matrix-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 6px;
+    line-height: 1.35;
+  }
+  .matrix-desc {
+    font-size: 11px;
+    color: var(--text-2);
+    line-height: 1.5;
+  }
+  .matrix-empty {
+    font-size: 11px;
+    color: var(--muted);
+    font-style: italic;
+    padding: 12px 13px;
+    background: #FAFBFC;
+    border: 1px dashed var(--border);
+    border-radius: var(--r-sm);
+    text-align: center;
+  }
+
+  /* ═══ Ranked list (mejores ganchos) ═══ */
+  .rank-list { display: flex; flex-direction: column; gap: 8px; }
+  .rank-item {
+    padding: 12px 14px;
+    background: #FAFBFC;
+    border: 1px solid var(--border);
+    border-radius: var(--r-sm);
+    position: relative;
+  }
+  .rank-num {
+    position: absolute;
+    top: 10px; right: 12px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--red);
+  }
+  .rank-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 8px;
+    padding-right: 32px;
+    line-height: 1.35;
+  }
+  .rank-tags {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+  }
+
+  @media (max-width: 900px) {
+    .shell    { flex-direction: column; }
+    .sidebar  { width: 100%; position: relative; max-height: none; }
+    .topbar, .content { padding: 16px 18px; }
+    .kpi-grid, .kpi-grid-2, .ch-grid, .axis-grid { grid-template-columns: 1fr; }
+    .matrix-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     Bloque de DATOS · poblado manualmente desde el PDF de Metricool.
+     Cuando llegue un nuevo reporte, le pasamos el PDF al asistente y
+     reemplazamos lo que esta entre los marcadores BEGIN/END METRICS.
+     ═══════════════════════════════════════════════════════════════════ -->
+<script>
+  // BEGIN METRICS · datos extraidos del PDF de Metricool
+  window.METRICS = {
+    "meta": {
+      "from": "2026-01-01",
+      "to": "2026-04-24",
+      "days": 114,
+      "generated_at": "2026-04-25T00:00:00",
+      "source": "manual-from-pdf",
+      "brand": "Agencia Lima Retail",
+      "handle": "@agencialimaretail"
+    },
+    "summary": {
+      "followers": {
+        "total": 774,
+        "change_pct": 1.04
+      },
+      "impressions": {
+        "total": 19190,
+        "change_pct": -28.09
+      },
+      "interactions": {
+        "total": 96,
+        "change_pct": 88.24
+      },
+      "posts": {
+        "total": 228,
+        "change_pct": -30.91
+      }
+    },
+    "instagram": {
+      "followers": 474,
+      "followers_change_pct": 1.28,
+      "impressions": 9716,
+      "impressions_change_pct": -38.69,
+      "posts": 190,
+      "posts_change_pct": -35.81,
+      "interactions": 5,
+      "interactions_change_pct": -16.67,
+      "reels": {
+        "count": 25,
+        "avg_reach": 32.24,
+        "avg_reach_change_pct": -46.56,
+        "engagement": 0.5,
+        "engagement_change_pct": 49.71
+      },
+      "stories": {
+        "count": 163,
+        "replies": 0,
+        "impressions": 935,
+        "impressions_change_pct": -50.29
+      },
+      "audience": {
+        "top_country": "Perú",
+        "top_country_pct": 85.25,
+        "top_city": "Lima",
+        "top_city_pct": 69.85
+      }
+    },
+    "tiktok": {
+      "followers": 300,
+      "followers_change_pct": 0.67,
+      "views": 10110,
+      "views_change_pct": 72.53,
+      "posts": 38,
+      "posts_change_pct": 11.76,
+      "interactions": 91,
+      "interactions_change_pct": 102.22,
+      "engagement": 0.96,
+      "engagement_change_pct": 17.22,
+      "avg_reach": 249.24,
+      "avg_reach_change_pct": 54.35,
+      "audience": {
+        "top_country": "Perú",
+        "top_country_pct": 59.32,
+        "secondary": "Bolivia 4.75% · México 2.71%"
+      }
+    },
+    "top_posts": [
+      {
+        "platform": "tiktok",
+        "date": "2026-02-26",
+        "text": "📊 En Google Ads no se puede mejorar lo que no se mide.",
+        "views": 236,
+        "likes": 7,
+        "engagement": 3.3,
+        "time": "16:03",
+        "duration_s": 16
+      },
+      {
+        "platform": "tiktok",
+        "date": "2026-01-02",
+        "text": "🚀 Aprende a crear campañas efectivas en Facebook Ads · Curso avanzado de Meta Ads.",
+        "views": 208,
+        "likes": 7,
+        "engagement": 3.72,
+        "time": "00:09",
+        "duration_s": 17
+      },
+      {
+        "platform": "tiktok",
+        "date": "2026-04-07",
+        "text": "🎯 ¿Tu campaña en Meta Ads tiene el objetivo correcto? WhatsApp, e-commerce o tienda.",
+        "views": 528,
+        "likes": 6,
+        "engagement": 1.19,
+        "time": "12:06",
+        "duration_s": 17
+      },
+      {
+        "platform": "tiktok",
+        "date": "2026-02-12",
+        "text": "💻 ¿Vendes productos pero tu empresa aún no cuenta con e-commerce? Shopify.",
+        "views": 143,
+        "likes": 6,
+        "engagement": 4.88,
+        "time": "19:02",
+        "duration_s": 29
+      },
+      {
+        "platform": "tiktok",
+        "date": "2026-01-19",
+        "text": "🚀 En Lima Retail lanzamos tu primera campaña publicitaria para vender online.",
+        "views": 232,
+        "likes": 6,
+        "engagement": 2.82,
+        "time": "17:21",
+        "duration_s": 31
+      },
+      {
+        "platform": "tiktok",
+        "date": "2026-03-26",
+        "text": "💰 Usa Google Ads para generar ventas, no solo clics.",
+        "views": 174,
+        "likes": 5,
+        "engagement": 2.92,
+        "time": "16:03",
+        "duration_s": 16
+      },
+      {
+        "platform": "tiktok",
+        "date": "2026-01-08",
+        "text": "🚀 Aprender Meta Ads es el primer paso para crecer.",
+        "views": 191,
+        "likes": 5,
+        "engagement": 2.78,
+        "time": "12:36",
+        "duration_s": 19
+      },
+      {
+        "platform": "tiktok",
+        "date": "2026-03-31",
+        "text": "(video sin texto)",
+        "views": 425,
+        "likes": 4,
+        "engagement": 0.98,
+        "time": "14:02",
+        "duration_s": 16
+      },
+      {
+        "platform": "tiktok",
+        "date": "2026-03-30",
+        "text": "(video sin texto)",
+        "views": 344,
+        "likes": 4,
+        "engagement": 1.16,
+        "time": "14:03",
+        "duration_s": 14
+      },
+      {
+        "platform": "tiktok",
+        "date": "2026-01-12",
+        "text": "🛒 Lanza tu tienda Shopify lista para vender este 2026.",
+        "views": 213,
+        "likes": 4,
+        "engagement": 2.0,
+        "time": "12:20",
+        "duration_s": 18
+      },
+      {
+        "platform": "tiktok",
+        "date": "2026-01-08",
+        "text": "¿Estás invirtiendo en Google Ads? Te ayudamos con palabras clave.",
+        "views": 333,
+        "likes": 4,
+        "engagement": 1.26,
+        "time": "12:23",
+        "duration_s": 15
+      },
+      {
+        "platform": "tiktok",
+        "date": "2026-04-24",
+        "text": "📱 ¿TikTok Ads funciona para tu negocio?",
+        "views": 158,
+        "likes": 3,
+        "engagement": null,
+        "time": "12:32",
+        "duration_s": 17
+      },
+      {
+        "platform": "tiktok",
+        "date": "2026-04-03",
+        "text": "(video sin texto)",
+        "views": 559,
+        "likes": 3,
+        "engagement": 0.54,
+        "time": "14:02",
+        "duration_s": 20
+      },
+      {
+        "platform": "tiktok",
+        "date": "2026-04-01",
+        "text": "(video sin texto)",
+        "views": 334,
+        "likes": 3,
+        "engagement": 0.92,
+        "time": "14:03",
+        "duration_s": 16
+      },
+      {
+        "platform": "tiktok",
+        "date": "2026-04-22",
+        "text": "¿Y si pudieras ver cuántos leads y ventas puedes generar antes de invertir?",
+        "views": 238,
+        "likes": 2,
+        "engagement": 0.98,
+        "time": "22:57",
+        "duration_s": 0
+      },
+      {
+        "platform": "tiktok",
+        "date": "2026-04-16",
+        "text": "📱 Perú tiene más de 16 millones de usuarios en TikTok.",
+        "views": 468,
+        "likes": 2,
+        "engagement": 0.43,
+        "time": "09:03",
+        "duration_s": 17
+      },
+      {
+        "platform": "tiktok",
+        "date": "2026-04-09",
+        "text": "💸 ¿Google Ads te está costando demasiado?",
+        "views": 471,
+        "likes": 2,
+        "engagement": 0.43,
+        "time": "13:06",
+        "duration_s": 13
+      },
+      {
+        "platform": "tiktok",
+        "date": "2026-04-04",
+        "text": "(video sin texto)",
+        "views": 474,
+        "likes": 2,
+        "engagement": 0.43,
+        "time": "14:02",
+        "duration_s": 16
+      },
+      {
+        "platform": "tiktok",
+        "date": "2026-03-20",
+        "text": "📊 Saber qué funciona en Google Ads te ayuda a vender.",
+        "views": 189,
+        "likes": 2,
+        "engagement": 1.21,
+        "time": "17:08",
+        "duration_s": 20
+      },
+      {
+        "platform": "tiktok",
+        "date": "2026-02-13",
+        "text": "📺 Muestra tu servicio en YouTube.",
+        "views": 144,
+        "likes": 2,
+        "engagement": 1.57,
+        "time": "15:46",
+        "duration_s": 17
+      },
+      {
+        "platform": "tiktok",
+        "date": "2026-02-17",
+        "text": "📺 Muestra tu servicio en YouTube a miles de personas.",
+        "views": 201,
+        "likes": 2,
+        "engagement": null,
+        "time": "18:37"
+      },
+      {
+        "platform": "tiktok",
+        "date": "2026-02-04",
+        "text": "🔍 Aparece en Google cuando tus clientes te buscan.",
+        "views": 208,
+        "likes": 0,
+        "engagement": null,
+        "time": "12:06"
+      },
+      {
+        "platform": "tiktok",
+        "date": "2026-04-14",
+        "text": "📉 ¿Frecuencia alta pero resultados bajos? Tu audiencia ya dejó de prestarle atención.",
+        "views": 510,
+        "likes": 1,
+        "engagement": null,
+        "time": "09:04"
+      },
+      {
+        "platform": "tiktok",
+        "date": "2026-04-05",
+        "text": "(video sin texto)",
+        "views": 561,
+        "likes": 1,
+        "engagement": null,
+        "time": "16:02"
+      },
+      {
+        "platform": "tiktok",
+        "date": "2026-04-02",
+        "text": "(video sin texto)",
+        "views": 558,
+        "likes": 1,
+        "engagement": null,
+        "time": "14:02"
+      },
+      {
+        "platform": "tiktok",
+        "date": "2026-03-31",
+        "text": "🛍️ Muestra tus productos directo en Google con imagen, precio y marca.",
+        "views": 543,
+        "likes": 0,
+        "engagement": null,
+        "time": "16:03"
+      },
+      {
+        "platform": "instagram-post",
+        "date": "2026-04-22",
+        "text": "¿Y si pudieras ver cuántos leads y ventas puedes generar antes de invertir?",
+        "views": 19,
+        "likes": 1,
+        "engagement": 11.11,
+        "time": "22:57",
+        "duration_s": 0
+      },
+      {
+        "platform": "instagram-reel",
+        "date": "2026-02-22",
+        "text": "🔍 Muestra tu servicio en Google Ads, ya sea en búsqueda u otros formatos.",
+        "views": 47,
+        "likes": 1,
+        "engagement": 5.26
+      }
+    ],
+    "recommendations": [
+      {
+        "platform": "tiktok",
+        "axis": "Errores",
+        "title": "Los 3 errores más caros en Meta Ads (Perú 2026)",
+        "format": "16s · dolor → solución → CTA",
+        "rationale": "Errores es el tema con mayor alcance acumulado. Top performer '📊 En Google Ads no se puede mejorar lo que no se mide' (7 likes, 3.30% eng) muestra que el ángulo error/medición resuena fuerte.",
+        "priority": "alta"
+      },
+      {
+        "platform": "tiktok",
+        "axis": "Comparaciones",
+        "title": "Meta Ads vs Google Ads: ¿cuál usar para tu PyME?",
+        "format": "20s · comparativa visual",
+        "rationale": "Comparaciones es un eje sin contenido publicado todavía pero con potencial. Los top hooks tocan 'objetivo correcto' (Meta) y 'palabras clave' (Google) — una comparación frontal cubre ambas audiencias en una pieza.",
+        "priority": "alta"
+      },
+      {
+        "platform": "tiktok",
+        "axis": "Inversión",
+        "title": "Cuánto invertir en tu primera campaña (Perú · S/30 al día)",
+        "format": "18s · paso a paso",
+        "rationale": "El ángulo 'primer paso' aparece en 2 del top 5: 'Lanzamos tu primera campaña' (6 likes) y 'Aprender Meta Ads primer paso' (5 likes). Un número concreto en soles peruanos pega al mercado local.",
+        "priority": "alta"
+      },
+      {
+        "platform": "tiktok",
+        "axis": "TikTok Ads",
+        "title": "TikTok Ads en Perú: cómo arrancar con S/30 al día",
+        "format": "17s · educativo + local",
+        "rationale": "El reel 'Perú tiene más de 16 millones de usuarios en TikTok' tiene 468 v pero solo 2 likes (0.43%). Pivotear de 'cifra impresionante' a 'cómo arrancas tú' activa la conversión.",
+        "priority": "media"
+      },
+      {
+        "platform": "tiktok",
+        "axis": "Comercio electrónico",
+        "title": "¿Vendes sin Shopify? Te muestro qué te estás perdiendo",
+        "format": "29s · caso + cifras",
+        "rationale": "El top performer '💻 ¿Vendes productos pero tu empresa aún no cuenta con e-commerce?' (143 v, 6 likes, 4.88% eng) tiene el engagement más alto del periodo. Replicar la fórmula con un caso concreto.",
+        "priority": "alta"
+      },
+      {
+        "platform": "tiktok",
+        "axis": "Resultados",
+        "title": "Caso real: bajamos S/X de CPA en una semana",
+        "format": "30-60s · narrativa + datos",
+        "rationale": "El eje 'Resultados/casos' está sub-utilizado: ningún post del periodo lo explota. Un caso con número concreto diferencia la marca de los educativos genéricos y atrae solicitud de auditoría.",
+        "priority": "media"
+      },
+      {
+        "platform": "tiktok",
+        "axis": "Errores",
+        "title": "Si tu Google Ads no vende, mira esto primero",
+        "format": "15s · dolor → diagnóstico",
+        "rationale": "Los temas Errores + Google Ads son los dos con mayor alcance. Combinar dolor específico ('no vende') con eje técnico (Google Ads) es la fórmula de '💰 Usa Google Ads para generar ventas' (5 likes, 2.92% eng).",
+        "priority": "media"
+      },
+      {
+        "platform": "instagram",
+        "axis": "Beneficio",
+        "title": "Aparece en Google sin pelearte con un experto",
+        "format": "15s · benefit-led",
+        "rationale": "El top reel de IG ('🔍 Aparece en Google cuando tus clientes te buscan', 208 v / 174 reach) abre con beneficio, no con dolor. En IG el lenguaje positivo desempeña mejor que el dolor que funciona en TikTok.",
+        "priority": "alta"
+      },
+      {
+        "platform": "instagram",
+        "axis": "Casos",
+        "title": "Antes y después: 3 cambios en una landing que duplicaron leads",
+        "format": "20s · transformación visual",
+        "rationale": "Los reels de IG promedian <50 views (alcance/reel 32.24, −47% vs periodo anterior). 'Antes/después' con visuals concretos rompe el patrón del contenido educativo plano que la audiencia limeña ya ignora.",
+        "priority": "alta"
+      },
+      {
+        "platform": "instagram",
+        "axis": "Comercio electrónico",
+        "title": "5 detalles de tu Shopify que están matando tus ventas",
+        "format": "carrusel + reel teaser de 10s",
+        "rationale": "70% de la audiencia IG es Lima — PyMEs con o sin tienda. Carrusel para feed (formato donde IG aún recompensa con alcance) + reel teaser corto que lleva al carrusel. Combina dos formatos en una pieza.",
+        "priority": "media"
+      }
+    ]
+  };
+  
+  // END METRICS
+</script>
+
+<div class="shell">
+  <!-- ═══════ SIDEBAR ═══════ -->
+  <aside class="sidebar">
+    <div class="s-brand">
+      <div class="s-title">Lima Retail</div>
+      <div class="s-sub">Plan de Contenidos · Q2 2026</div>
+    </div>
+
+    <div class="s-group-lbl">Diagnóstico</div>
+    <a href="#resumen"           class="s-item">Resumen ejecutivo</a>
+    <a href="#por-canal"         class="s-item">Por canal · IG vs TikTok</a>
+    <a href="#vista-comparativa" class="s-item">Vista comparativa</a>
+    <a href="#top"               class="s-item">Top contenido</a>
+    <a href="#temas-ganchos"     class="s-item">Temas y ganchos</a>
+    <a href="#decisiones"        class="s-item">Decisiones estratégicas</a>
+    <a href="#formato"           class="s-item">Formato del reel</a>
+    <a href="#recomendaciones"   class="s-item">Recomendaciones</a>
+    <a href="#hallazgos"         class="s-item">Hallazgos clave</a>
+
+    <div class="s-group-lbl" style="margin-top:14px">Propuesta</div>
+    <a href="#supuestos"  class="s-item">Supuestos de venta</a>
+    <a href="#ejes"       class="s-item">Ejes temáticos</a>
+    <a href="#mix"        class="s-item">Mix por plataforma</a>
+    <a href="#calendario" class="s-item">Calendario semanal</a>
+    <a href="#acciones"   class="s-item">Acciones · 30 días</a>
+
+    <hr class="s-div" />
+
+    <div class="s-group-lbl">Datos</div>
+    <div style="padding: 0 14px 10px; font-size:11px; color:#94A3B8; line-height:1.6;">
+      <span id="data-source">Fuente: —</span><br/>
+      <span id="data-period" style="color:#64748B;">Periodo: —</span>
+    </div>
+
+    <div class="s-footer">
+      Codex 005 · v0.3<br/>
+      <span id="todayStr"></span>
+    </div>
+  </aside>
+
+  <!-- ═══════ MAIN ═══════ -->
+  <main class="main">
+
+    <div class="topbar">
+      <div>
+        <div class="topbar-title">Plan de Contenidos · Lima Retail</div>
+        <div class="topbar-sub">
+          <span class="topbar-pill" id="period-pill">Periodo: —</span>
+          <span class="topbar-pill" id="brand-pill">@agencialimaretail</span>
+          <span class="topbar-pill" id="source-pill">Fuente: —</span>
+        </div>
+      </div>
+      <div class="topbar-actions">
+        <button class="btn" onclick="window.print()">Exportar PDF</button>
+        <button class="btn primary" id="btnApprove">Aprobar plan</button>
+      </div>
+    </div>
+
+    <div class="content">
+
+      <!-- ═══════ 1 · RESUMEN EJECUTIVO ═══════ -->
+      <section id="resumen">
+        <div class="sec-lbl">1 · Resumen ejecutivo</div>
+        <div class="kpi-grid">
+          <div class="kpi-card">
+            <div class="kpi-icon blue"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/></svg></div>
+            <div class="kpi-lbl">Seguidores totales</div>
+            <div class="kpi-val blue" data-m="summary.followers.total">—</div>
+            <div class="kpi-trend" data-trend="summary.followers.change_pct" data-suffix=" vs periodo anterior"></div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-icon red"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg></div>
+            <div class="kpi-lbl">Impresiones</div>
+            <div class="kpi-val red" data-m="summary.impressions.total" data-fmt="k">—</div>
+            <div class="kpi-trend" data-trend="summary.impressions.change_pct"></div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-icon green"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+            <div class="kpi-lbl">Interacciones</div>
+            <div class="kpi-val green" data-m="summary.interactions.total">—</div>
+            <div class="kpi-trend" data-trend="summary.interactions.change_pct"></div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-icon amber"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/></svg></div>
+            <div class="kpi-lbl">Publicaciones</div>
+            <div class="kpi-val amber" data-m="summary.posts.total">—</div>
+            <div class="kpi-trend" data-trend="summary.posts.change_pct"></div>
+          </div>
+        </div>
+
+        <div class="insight info" style="margin-top:14px">
+          <b>Lectura rápida.</b> Las impresiones caen y las publicaciones bajan, pero las interacciones absolutas suben — el engagement está mejorando aunque el volumen baje. La caída es Instagram; el crecimiento es TikTok. La estrategia Q2 debe rebalancear el peso entre los dos canales.
+        </div>
+      </section>
+
+      <!-- ═══════ 2 · POR CANAL ═══════ -->
+      <section id="por-canal">
+        <div class="sec-lbl">2 · Diagnóstico por canal</div>
+        <div class="ch-grid">
+
+          <!-- Instagram -->
+          <div class="ch-card ch-ig">
+            <div class="ch-head">
+              <div>
+                <div class="ch-name">Instagram</div>
+                <div class="panel-sub">@agencialimaretail</div>
+              </div>
+              <span class="pill" id="ig-status">—</span>
+            </div>
+            <div class="ch-row"><span class="ch-lbl">Seguidores</span><span class="ch-val"><span data-m="instagram.followers">—</span> <span class="ch-trend" data-trend="instagram.followers_change_pct"></span></span></div>
+            <div class="ch-row"><span class="ch-lbl">Impresiones</span><span class="ch-val"><span data-m="instagram.impressions">—</span> <span class="ch-trend" data-trend="instagram.impressions_change_pct"></span></span></div>
+            <div class="ch-row"><span class="ch-lbl">Publicaciones</span><span class="ch-val"><span data-m="instagram.posts">—</span> <span class="ch-trend" data-trend="instagram.posts_change_pct"></span></span></div>
+            <div class="ch-row"><span class="ch-lbl">Interacciones</span><span class="ch-val"><span data-m="instagram.interactions">—</span> <span class="ch-trend" data-trend="instagram.interactions_change_pct"></span></span></div>
+            <div class="ch-row"><span class="ch-lbl">Reels · alcance/reel</span><span class="ch-val"><span data-m="instagram.reels.count">—</span> · <span data-m="instagram.reels.avg_reach">—</span> <span class="ch-trend" data-trend="instagram.reels.avg_reach_change_pct"></span></span></div>
+            <div class="ch-row"><span class="ch-lbl">Stories · respuestas</span><span class="ch-val"><span data-m="instagram.stories.count">—</span> · <span data-m="instagram.stories.replies">—</span> respuestas <span class="ch-trend" data-trend="instagram.stories.impressions_change_pct"></span></span></div>
+            <div class="ch-row"><span class="ch-lbl">Audiencia</span><span class="ch-val" id="ig-audience">—</span></div>
+          </div>
+
+          <!-- TikTok -->
+          <div class="ch-card ch-tt">
+            <div class="ch-head">
+              <div>
+                <div class="ch-name">TikTok</div>
+                <div class="panel-sub">@agencialimaretail</div>
+              </div>
+              <span class="pill" id="tt-status">—</span>
+            </div>
+            <div class="ch-row"><span class="ch-lbl">Seguidores</span><span class="ch-val"><span data-m="tiktok.followers">—</span> <span class="ch-trend" data-trend="tiktok.followers_change_pct"></span></span></div>
+            <div class="ch-row"><span class="ch-lbl">Visualizaciones</span><span class="ch-val"><span data-m="tiktok.views" data-fmt="k">—</span> <span class="ch-trend" data-trend="tiktok.views_change_pct"></span></span></div>
+            <div class="ch-row"><span class="ch-lbl">Publicaciones</span><span class="ch-val"><span data-m="tiktok.posts">—</span> <span class="ch-trend" data-trend="tiktok.posts_change_pct"></span></span></div>
+            <div class="ch-row"><span class="ch-lbl">Interacciones</span><span class="ch-val"><span data-m="tiktok.interactions">—</span> <span class="ch-trend" data-trend="tiktok.interactions_change_pct"></span></span></div>
+            <div class="ch-row"><span class="ch-lbl">Engagement</span><span class="ch-val"><span data-m="tiktok.engagement">—</span> <span class="ch-trend" data-trend="tiktok.engagement_change_pct"></span></span></div>
+            <div class="ch-row"><span class="ch-lbl">Alcance promedio/post</span><span class="ch-val"><span data-m="tiktok.avg_reach">—</span> <span class="ch-trend" data-trend="tiktok.avg_reach_change_pct"></span></span></div>
+            <div class="ch-row"><span class="ch-lbl">Audiencia</span><span class="ch-val" id="tt-audience">—</span></div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ═══════ VISTA COMPARATIVA ═══════ -->
+      <section id="vista-comparativa">
+        <div class="sec-lbl">Vista comparativa · plataformas y matriz</div>
+        <div class="kpi-grid-2">
+
+          <div class="chart-panel">
+            <div class="panel-head">
+              <div>
+                <div class="panel-title">Rendimiento por plataforma</div>
+                <div class="panel-sub">Alcance vs nuevos seguidores en el periodo</div>
+              </div>
+            </div>
+            <div class="chart-canvas-wrap"><div id="chartPlatform" class="chart-svg-host"></div></div>
+          </div>
+
+          <div class="chart-panel">
+            <div class="panel-head">
+              <div>
+                <div class="panel-title">Matriz de alcance e interacción</div>
+                <div class="panel-sub">Cada punto = un post · X = visualizaciones · Y = engagement %</div>
+              </div>
+            </div>
+            <div class="chart-canvas-wrap"><div id="chartMatrix" class="chart-svg-host"></div></div>
+            <div class="chart-legend">
+              <b>Buena interacción + bajo alcance</b>: mejorar ganchos. <b>Alto alcance + alta interacción</b>: repetir contenido. <b>Alto alcance + baja interacción</b>: mejorar mensaje. <b>Bajo alcance + baja interacción</b>: detener o pivotar.
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ═══════ 3 · TOP CONTENIDO ═══════ -->
+      <section id="top">
+        <div class="sec-lbl">3 · Top contenido del periodo</div>
+        <div class="panel">
+          <div class="panel-head">
+            <div>
+              <div class="panel-title">Posts con mejor engagement</div>
+              <div class="panel-sub">El patrón ganador: hook con dolor + emoji · 15-20s · Meta/Google Ads</div>
+            </div>
+          </div>
+
+          <!-- Barra de filtros: solo afecta esta tabla y su contador -->
+          <div class="filter-bar" id="filterBar">
+            <span class="f-lbl">Periodo</span>
+            <button class="f-btn on" data-filter="all">Todo (Ene-Abr)</button>
+            <button class="f-btn"     data-filter="2026-01">Enero</button>
+            <button class="f-btn"     data-filter="2026-02">Febrero</button>
+            <button class="f-btn"     data-filter="2026-03">Marzo</button>
+            <button class="f-btn"     data-filter="2026-04">Abril</button>
+            <button class="f-btn"     data-filter="last30">Últimos 30 días</button>
+            <span class="filter-summary" id="filterSummary">—</span>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Plataforma</th>
+                  <th>Fecha</th>
+                  <th>Texto</th>
+                  <th class="r">Visual.</th>
+                  <th class="r">Likes</th>
+                  <th class="r">Eng. %</th>
+                </tr>
+              </thead>
+              <tbody id="top-posts-body">
+                <tr><td colspan="6" style="text-align:center; color: var(--muted); padding: 30px;">Cargando…</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="insight info" style="margin-top:14px">
+            <b>Patrón claro.</b> Los top performers en TikTok comparten estructura: emoji + pregunta-dolor en el hook · explicación corta · servicio. Duración 15-20s. Los temas que resuenan: <b>medición · objetivo de campaña · costo · primer paso</b>. Replicar esa fórmula como template.
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════ TEMAS Y GANCHOS ═══════ -->
+      <section id="temas-ganchos">
+        <div class="sec-lbl">Análisis por tema y hook</div>
+        <div class="kpi-grid-2">
+
+          <div class="chart-panel">
+            <div class="panel-head">
+              <div>
+                <div class="panel-title">Mejores temas por alcance</div>
+                <div class="panel-sub">Suma de visualizaciones agregada por tema</div>
+              </div>
+            </div>
+            <div class="chart-canvas-wrap"><div id="chartTopics" class="chart-svg-host"></div></div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-head">
+              <div>
+                <div class="panel-title">Mejores ganchos</div>
+                <div class="panel-sub">Top 5 por engagement %</div>
+              </div>
+            </div>
+            <div class="rank-list" id="rankList"></div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ═══════ DECISIONES ESTRATÉGICAS ═══════ -->
+      <section id="decisiones">
+        <div class="sec-lbl">Decisiones estratégicas</div>
+        <div class="panel">
+          <div class="panel-head">
+            <div>
+              <div class="panel-title">Qué hacer con cada tipo de contenido</div>
+              <div class="panel-sub">Clasificación por cuadrante (alcance × engagement) sobre la mediana del periodo</div>
+            </div>
+          </div>
+          <div class="matrix-grid" id="matrixGrid">
+            <div class="matrix-col" data-quad="repeat">
+              <div class="matrix-head"><span class="pill green">Repetir</span></div>
+            </div>
+            <div class="matrix-col" data-quad="hook">
+              <div class="matrix-head"><span class="pill amber">Mejorar gancho</span></div>
+            </div>
+            <div class="matrix-col" data-quad="message">
+              <div class="matrix-head"><span class="pill blue">Mejorar mensaje</span></div>
+            </div>
+            <div class="matrix-col" data-quad="stop">
+              <div class="matrix-head"><span class="pill red">Detener o pivotar</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════ FORMATO Y ANATOMIA DEL REEL ═══════ -->
+      <section id="formato">
+        <div class="sec-lbl">Formato y anatomía del reel ganador</div>
+
+        <div class="kpi-grid" id="formatStats">
+          <!-- 4 KPI cards rendered by JS -->
+        </div>
+
+        <div class="panel" style="margin-top: 14px">
+          <div class="panel-head">
+            <div>
+              <div class="panel-title">Anatomía del hook ganador</div>
+              <div class="panel-sub">Patrones extraídos de los posts con mayor engagement (TikTok, eng &gt; 1.5%)</div>
+            </div>
+          </div>
+          <div class="anatomy-grid">
+            <div class="anatomy-col">
+              <div class="anatomy-lbl">1 · Apertura</div>
+              <div class="anatomy-val">Emoji + pregunta-dolor</div>
+              <div class="anatomy-detail">Los top performers abren con emoji (📊 💰 🎯 🚀 💻) en los primeros 2-3 segundos. 60% usan pregunta-dolor (¿Tu campaña...? ¿Vendes...?). El emoji es hook visual, la pregunta es hook verbal.</div>
+            </div>
+            <div class="anatomy-col">
+              <div class="anatomy-lbl">2 · Estructura</div>
+              <div class="anatomy-val">Dolor → Solución → CTA</div>
+              <div class="anatomy-detail">3 partes en 15-20s. Dolor (3s, abre), solución/cómo lo resolvemos (8-10s, cuerpo), llamado a acción (3s, cierra). Replicar como template fijo para cada nuevo reel.</div>
+            </div>
+            <div class="anatomy-col">
+              <div class="anatomy-lbl">3 · Lenguaje</div>
+              <div class="anatomy-val">2da persona + imperativo</div>
+              <div class="anatomy-detail">"Tu campaña", "tus clientes", "tus resultados". Verbos en imperativo: "Aprende", "Lanza", "Aparece", "Usa". Texto en pantalla siempre — no depender del audio.</div>
+            </div>
+            <div class="anatomy-col">
+              <div class="anatomy-lbl">4 · Cierre</div>
+              <div class="anatomy-val">CTA único y concreto</div>
+              <div class="anatomy-detail">Mensaje directo, link en bio, o WhatsApp. Nunca dos CTAs simultáneos. La acción concreta ("Escríbeme", "Mira el link") supera al genérico ("Síguenos").</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════ RECOMENDACIONES DE NUEVOS REELS ═══════ -->
+      <section id="recomendaciones">
+        <div class="sec-lbl">Recomendaciones de nuevos reels · qué grabar después</div>
+        <div class="rec-grid" id="recGrid">
+          <!-- Cards rendered by JS -->
+        </div>
+        <div class="insight info" style="margin-top: 14px">
+          <b>Cómo leer estas recomendaciones.</b> Cada tarjeta toma un patrón observado en el reporte (top performer, eje sub-explotado, tema con tracción) y lo convierte en un reel concreto a producir. Prioridad <b>alta</b> = tiene evidencia directa de que ya funciona o es la oportunidad más clara. <b>Media</b> = es replanteo de algo que está cerca pero no convierte.
+        </div>
+      </section>
+
+      <!-- ═══════ 4 · HALLAZGOS ═══════ -->
+      <section id="hallazgos">
+        <div class="sec-lbl">4 · Hallazgos clave</div>
+        <div class="panel">
+          <div class="insight ok">
+            <b>TikTok es el motor del crecimiento.</b> Interacciones, visualizaciones, alcance/post y publicaciones todas en verde. Es el único canal con todas las métricas creciendo. El Q2 debe doblar la apuesta aquí.
+          </div>
+          <div class="insight warn">
+            <b>Instagram está sobrepublicando sin retorno.</b> Mucho volumen de posts y muy pocas interacciones. La caída de impresiones y de alcance por reel sugiere fatiga de audiencia y/o señales de calidad bajas. Bajar volumen, subir calidad.
+          </div>
+          <div class="insight err">
+            <b>Las Stories están muertas.</b> Cero respuestas en todo el periodo y caída fuerte de impresiones. Son ruido para la audiencia. Replanteo total: máximo 3-5 stories/día con CTA explícito.
+          </div>
+          <div class="insight info">
+            <b>La audiencia es local.</b> 85% Perú · 70% Lima en IG. El mensaje, los referentes y los precios deben hablar a la PyME limeña. TikTok abre algo de regional (Bolivia, México, Chile) — útil para escalar el curso o servicios remotos.
+          </div>
+          <div class="insight info">
+            <b>El contenido educativo de plataformas Ads es lo que convierte.</b> Meta Ads, Google Ads, Shopify dominan el top. Los reels sin texto/copy ("- Go") ganan impresiones pero cero engagement — son views vacíos. Cada pieza necesita copy con dolor + servicio.
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════ 5 · SUPUESTOS DE VENTA ═══════ -->
+      <section id="supuestos">
+        <div class="sec-lbl">5 · Supuestos sobre objetivos de venta</div>
+        <div class="panel">
+          <div class="panel-head">
+            <div>
+              <div class="panel-title">Lo que estoy asumiendo · ajusta si es distinto</div>
+              <div class="panel-sub">No me diste metas explícitas; estos son inferencias del contenido publicado.</div>
+            </div>
+            <span class="pill amber">Pendiente confirmar</span>
+          </div>
+          <ol class="action-list">
+            <li>Generar leads B2B SMB en Perú para servicios de pauta digital — <b>Meta Ads, Google Ads, TikTok Ads</b>.</li>
+            <li>Vender el <b>curso avanzado de Meta Ads</b> y capacitaciones similares.</li>
+            <li>Cerrar setups de <b>Shopify e-commerce</b> conectados a Meta Ads.</li>
+            <li>Posicionar a Lima Retail como <b>autoridad en performance marketing</b> en Lima/Perú.</li>
+            <li>Captar PyMEs locales que <b>prueban TikTok Ads por primera vez</b> — un nicho con poca competencia educadora.</li>
+          </ol>
+          <div class="insight warn" style="margin-top:14px">
+            <b>Para afinar el plan</b>, dime: meta de leads/mes en Q2, mix por servicio (¿qué % a Meta Ads vs Shopify vs curso?), y ticket promedio. Con esos números ajusto el calendario y los CTAs.
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════ 6 · EJES TEMÁTICOS ═══════ -->
+      <section id="ejes">
+        <div class="sec-lbl">6 · Ejes temáticos del plan</div>
+        <div class="axis-grid">
+          <div class="axis-card ax-blue">
+            <div class="axis-num">Eje 1 · Pilar</div>
+            <div class="axis-title">Educativo de plataformas</div>
+            <div class="axis-meta">Meta Ads, Google Ads, TikTok Ads, Shopify. Formato dolor → solución → servicio. Es lo que ya está convirtiendo en TikTok.</div>
+            <div class="axis-share">60% del calendario</div>
+          </div>
+          <div class="axis-card ax-amber">
+            <div class="axis-num">Eje 2 · Diferenciador</div>
+            <div class="axis-title">Resultados, casos y números</div>
+            <div class="axis-meta">Comparativas (S/X invertido → S/Y vendido), antes vs después, métricas reales de campañas. Refuerza autoridad y aleja al contenido genérico.</div>
+            <div class="axis-share">25% del calendario</div>
+          </div>
+          <div class="axis-card ax-green">
+            <div class="axis-num">Eje 3 · Conversión</div>
+            <div class="axis-title">Servicio y producto concreto</div>
+            <div class="axis-meta">Curso Meta Ads, auditoría gratuita, setup Shopify, leads por WhatsApp. CTA directo a venta o agendamiento.</div>
+            <div class="axis-share">15% del calendario</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════ 7 · MIX POR PLATAFORMA ═══════ -->
+      <section id="mix">
+        <div class="sec-lbl">7 · Mix por plataforma</div>
+        <div class="kpi-grid-2">
+          <div class="panel" style="border-top: 3px solid var(--green);">
+            <div class="panel-head">
+              <div>
+                <div class="panel-title">TikTok · canal principal</div>
+                <div class="panel-sub">Doblar la apuesta donde ya hay tracción</div>
+              </div>
+              <span class="pill green">Core</span>
+            </div>
+            <ul style="margin: 0; padding-left: 18px; line-height: 1.8; font-size: 13px; color: var(--text-2);">
+              <li><b>4 reels/semana</b> (~16/mes vs 38 actuales — bajar volumen, subir calidad).</li>
+              <li><b>Duración 15-20s</b>, hook en los primeros 3 segundos.</li>
+              <li>Texto en pantalla siempre — replicar copy del top performer.</li>
+              <li>CTA al final: visitar bio, mensaje directo, WhatsApp.</li>
+              <li>Hashtags probados: #marketingdigital · #metaads · #googleads.</li>
+              <li>Probar 2 reels/mes de <b>30-60s</b> con casos reales — diferenciador.</li>
+            </ul>
+          </div>
+
+          <div class="panel" style="border-top: 3px solid var(--amber);">
+            <div class="panel-head">
+              <div>
+                <div class="panel-title">Instagram · canal de soporte</div>
+                <div class="panel-sub">Bajar volumen, subir calidad. Re-publicar de TikTok.</div>
+              </div>
+              <span class="pill amber">Replantear</span>
+            </div>
+            <ul style="margin: 0; padding-left: 18px; line-height: 1.8; font-size: 13px; color: var(--text-2);">
+              <li><b>Bajar de 190 a ~30 posts en Q2</b> (10/mes).</li>
+              <li>1 carrusel educativo / semana (mismo eje que TikTok).</li>
+              <li>1 reel / semana: re-publicar el de TikTok adaptado.</li>
+              <li><b>Stories</b>: máx 3-5 por día, todas con CTA explícito (encuesta, link, mensaje). Eliminar publicación automática sin objetivo.</li>
+              <li>Aprovechar 70% Lima → mensajería local: "PyMEs limeñas", referencias a distritos, casos del Perú.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════ 8 · CALENDARIO ═══════ -->
+      <section id="calendario">
+        <div class="sec-lbl">8 · Calendario · semana tipo</div>
+        <div class="panel">
+          <div class="panel-head">
+            <div>
+              <div class="panel-title">Distribución semanal sugerida</div>
+              <div class="panel-sub">Patrón replicable las 12 semanas del Q2 con rotación de ejes</div>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>Día</th><th>TikTok</th><th>Instagram (feed)</th><th>Stories</th><th>Eje</th></tr>
+              </thead>
+              <tbody>
+                <tr><td class="cal-day">Lunes</td><td>Reel educativo (Meta Ads)</td><td class="cal-empty">—</td><td>Recap viernes / pregunta</td><td><span class="pill blue">Educativo</span></td></tr>
+                <tr><td class="cal-day">Martes</td><td class="cal-empty">—</td><td>Carrusel educativo (Google Ads)</td><td class="cal-empty">—</td><td><span class="pill blue">Educativo</span></td></tr>
+                <tr><td class="cal-day">Miércoles</td><td>Reel comparativa / caso</td><td class="cal-empty">—</td><td>CTA mensaje directo</td><td><span class="pill amber">Resultados</span></td></tr>
+                <tr><td class="cal-day">Jueves</td><td class="cal-empty">—</td><td>Reel (re-publicar de miércoles)</td><td>Pregunta + sticker</td><td><span class="pill amber">Resultados</span></td></tr>
+                <tr><td class="cal-day">Viernes</td><td>Reel CTA producto/servicio</td><td>Story con link a auditoría</td><td>Link a curso / WhatsApp</td><td><span class="pill green">Conversión</span></td></tr>
+                <tr><td class="cal-day">Sábado</td><td class="cal-empty">—</td><td class="cal-empty">—</td><td>Behind-the-scenes / equipo</td><td><span class="pill gray">Comunidad</span></td></tr>
+                <tr><td class="cal-day">Domingo</td><td class="cal-empty">— descanso —</td><td class="cal-empty">— descanso —</td><td class="cal-empty">— descanso —</td><td class="cal-empty">—</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="insight info" style="margin-top:14px">
+            <b>Volumen mensual.</b> ≈16 reels TikTok · 4 carruseles IG · 4 reels IG (re-uso) · ≈75 stories con CTA. Total: <b>≈100 piezas/mes vs ~250/mes actuales</b>. Menos publicación, más estratégica.
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════ 9 · ACCIONES 30 DÍAS ═══════ -->
+      <section id="acciones">
+        <div class="sec-lbl">9 · Acciones · primeros 30 días</div>
+        <div class="panel">
+          <ol class="action-list">
+            <li><b>Reducir frecuencia en Instagram</b> a 8-10 piezas/mes y reasignar el tiempo a producción TikTok (4 reels/semana).</li>
+            <li><b>Replantear Stories</b>: cada set debe tener CTA. Apagar publicaciones automáticas sin engagement.</li>
+            <li><b>Producir 5 reels de estrategia</b> con el prompt ya guardado en <code>prompts/reels_estrategia.txt</code>.</li>
+            <li><b>Documentar template ganador</b>: hook con emoji + pregunta-dolor → explicación 8-10s → CTA. Reutilizar en cada pieza.</li>
+            <li><b>Probar formato largo</b>: 2 reels/mes de 30-60s con caso real anonimizado.</li>
+            <li><b>Definir metas Q2</b>: leads/mes, mix por servicio, ticket promedio. Sin esos números el plan se queda en directrices.</li>
+            <li><b>Refrescar datos cada 2 semanas</b>: exportar el PDF desde Metricool y pasarlo al asistente para regenerar las métricas y volver a clasificar el contenido.</li>
+          </ol>
+        </div>
+
+        <div class="insight info">
+          <b>Siguiente paso.</b> Cuando tengas un nuevo reporte de Metricool, exportá el PDF y pasámelo en el chat — actualizo el bloque <code>METRICS</code>, regenero la clasificación de contenido (temas, ganchos, decisiones) y dejamos lista una versión nueva para revisar antes de pushear a <code>jorgeluis666/codex005</code>.
+        </div>
+      </section>
+
+    </div>
+  </main>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     RENDER — lee window.METRICS y puebla el dashboard.
+     Si no hay datos, muestra "—" y un aviso en el sidebar.
+     ═══════════════════════════════════════════════════════════════════ -->
+<script>
+(function() {
+  const M = window.METRICS;
+  const $ = sel => document.querySelector(sel);
+  const $$ = sel => document.querySelectorAll(sel);
+
+  const fmtNum = (n, kind) => {
+    if (n === null || n === undefined) return '—';
+    if (typeof n !== 'number') return String(n);
+    if (kind === 'k' && Math.abs(n) >= 1000) return (n/1000).toFixed(2) + 'K';
+    if (Number.isInteger(n)) return n.toLocaleString('es-PE');
+    return n.toFixed(2);
+  };
+  const fmtPct = p => {
+    if (p === null || p === undefined) return '';
+    return (p >= 0 ? '+' : '') + p.toFixed(2) + '%';
+  };
+  const getPath = (obj, path) =>
+    path.split('.').reduce((o, k) => (o == null ? undefined : o[k]), obj);
+  const escapeHtml = s => String(s == null ? '' : s).replace(/[&<>"']/g,
+    c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
+
+  // Hoy en sidebar footer
+  const hoy = new Date();
+  $('#todayStr').textContent = 'Hoy · ' +
+    String(hoy.getDate()).padStart(2,'0') + '/' +
+    String(hoy.getMonth()+1).padStart(2,'0') + '/' + hoy.getFullYear();
+
+  if (!M) {
+    document.querySelectorAll('[data-m]').forEach(el => el.textContent = '—');
+    $('#data-source').textContent = 'Fuente: sin datos';
+    $('#period-pill').textContent = 'Sin datos';
+    return;
+  }
+
+  // Period & source
+  const periodTxt = `Periodo: ${M.meta.from} → ${M.meta.to}`;
+  $('#period-pill').textContent = periodTxt;
+  $('#data-period').textContent = periodTxt;
+
+  const sourceLabel = M.meta.source === 'metricool-api'
+    ? `API Metricool · ${(M.meta.generated_at || '').slice(0,16).replace('T',' ')}`
+    : (M.meta.source === 'manual-from-pdf'
+        ? 'PDF Metricool (manual)'
+        : `Fuente: ${M.meta.source}`);
+  $('#data-source').textContent = sourceLabel;
+  $('#source-pill').textContent = sourceLabel;
+  $('#source-pill').classList.add(
+    M.meta.source === 'metricool-api' ? 'live' :
+    M.meta.source === 'manual-from-pdf' ? 'manual' : 'stale'
+  );
+  $('#brand-pill').textContent = M.meta.handle || '@agencialimaretail';
+
+  // KPIs y ch-rows: data-m y data-trend
+  $$('[data-m]').forEach(el => {
+    const v = getPath(M, el.dataset.m);
+    el.textContent = fmtNum(v, el.dataset.fmt);
+  });
+  $$('[data-trend]').forEach(el => {
+    const p = getPath(M, el.dataset.trend);
+    if (p === null || p === undefined) { el.textContent = ''; return; }
+    el.textContent = fmtPct(p) + (el.dataset.suffix || '');
+    el.classList.remove('up','down','flat');
+    el.classList.add(p > 0 ? 'up' : p < 0 ? 'down' : 'flat');
+  });
+
+  // Status pills (IG/TT)
+  const igTrend = M.summary && M.summary.impressions && M.summary.impressions.change_pct;
+  const igStatus = $('#ig-status');
+  if (igStatus) {
+    const igDown = (M.instagram.impressions_change_pct || 0) < -10;
+    igStatus.textContent = igDown ? 'En caída' : 'Estable';
+    igStatus.classList.add(igDown ? 'red' : 'gray');
+  }
+  const ttStatus = $('#tt-status');
+  if (ttStatus) {
+    const ttUp = (M.tiktok.interactions_change_pct || 0) > 10;
+    ttStatus.textContent = ttUp ? 'Crece' : 'Estable';
+    ttStatus.classList.add(ttUp ? 'green' : 'gray');
+  }
+
+  // Audiencia
+  const igA = M.instagram && M.instagram.audience;
+  if (igA) {
+    $('#ig-audience').textContent =
+      `${igA.top_country_pct || '—'}% ${igA.top_country || ''} · ${igA.top_city_pct || '—'}% ${igA.top_city || ''}`;
+  }
+  const ttA = M.tiktok && M.tiktok.audience;
+  if (ttA) {
+    $('#tt-audience').textContent = ttA.secondary
+      ? `${ttA.top_country_pct || '—'}% ${ttA.top_country || ''} · ${ttA.secondary}`
+      : `${ttA.top_country_pct || '—'}% ${ttA.top_country || ''}`;
+  }
+
+  // ═══ Top posts table + filtro de tiempo ═══
+  let currentFilter = 'all';
+
+  function filterPosts(posts, filter) {
+    if (!Array.isArray(posts)) return [];
+    if (filter === 'all') return posts.slice();
+    if (filter === 'last30') {
+      const end = new Date(M.meta.to);
+      const start = new Date(end);
+      start.setDate(start.getDate() - 30);
+      return posts.filter(p => {
+        if (!p.date) return false;
+        const d = new Date(p.date);
+        return d >= start && d <= end;
+      });
+    }
+    // YYYY-MM (mes)
+    return posts.filter(p => (p.date || '').startsWith(filter));
+  }
+
+  function renderTopPosts(posts) {
+    const tbody = $('#top-posts-body');
+    if (!tbody) return;
+    if (!posts.length) {
+      tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; color: var(--muted); padding: 30px;">Sin contenido en este rango</td></tr>';
+      return;
+    }
+    // Ordenar por likes desc, luego engagement desc
+    const sorted = posts.slice().sort((a, b) =>
+      (b.likes || 0) - (a.likes || 0) || (b.engagement || 0) - (a.engagement || 0)
+    );
+    tbody.innerHTML = sorted.map(p => {
+      const isTT = (p.platform || '').startsWith('tiktok');
+      const cls  = isTT ? 'tc-platform-tt' : 'tc-platform-ig';
+      const lbl  = (p.platform || '').replace('-', ' · ').replace('instagram','IG').replace('tiktok','TikTok');
+      return `<tr>
+        <td><span class="${cls}">${escapeHtml(lbl)}</span></td>
+        <td>${escapeHtml(p.date || '—')}</td>
+        <td class="tc-text">${escapeHtml(p.text || '—')}</td>
+        <td class="r">${fmtNum(p.views)}</td>
+        <td class="r"><b>${fmtNum(p.likes)}</b></td>
+        <td class="r">${(typeof p.engagement === 'number' ? p.engagement.toFixed(2) : '—')}</td>
+      </tr>`;
+    }).join('');
+  }
+
+  function renderFilterSummary(posts) {
+    const el = $('#filterSummary');
+    if (!el) return;
+    if (!posts.length) {
+      el.innerHTML = '<b>0</b> posts';
+      return;
+    }
+    const totalViews = posts.reduce((s, p) => s + (p.views || 0), 0);
+    const totalLikes = posts.reduce((s, p) => s + (p.likes || 0), 0);
+    el.innerHTML =
+      `<b>${posts.length}</b> posts · ` +
+      `<b>${totalViews.toLocaleString('es-PE')}</b> visualizaciones · ` +
+      `<b>${totalLikes}</b> likes`;
+  }
+
+  function applyFilter() {
+    const filtered = filterPosts(M.top_posts, currentFilter);
+    renderTopPosts(filtered);
+    renderFilterSummary(filtered);
+  }
+
+  // Wiring de los botones
+  $$('#filterBar .f-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      $$('#filterBar .f-btn').forEach(x => x.classList.remove('on'));
+      btn.classList.add('on');
+      currentFilter = btn.dataset.filter;
+      applyFilter();
+    });
+  });
+
+  applyFilter();
+
+  // ═══ Charts + clasificación de contenido ═══
+  const PALETTE = {
+    brand: '#2563EB', green: '#059669', amber: '#D97706', red: '#DC2626',
+    purple: '#7C3AED', tt: '#0EA5E9', ig: '#EC4899'
+  };
+
+  function classifyTopic(text) {
+    const t = (text || '').toLowerCase();
+    if (!t || t.includes('sin texto')) return 'Sin texto';
+    if (/\bvs\b|frente a|comparar|comparativa/.test(t)) return 'Comparaciones';
+    if (/tiktok ads/.test(t)) return 'TikTok Ads';
+    if (/meta ads|facebook ads/.test(t)) return 'Meta Ads';
+    if (/google ads/.test(t)) return 'Google Ads';
+    if (/shopify|e-commerce|tienda|comercio/.test(t)) return 'Comercio electrónico';
+    if (/whatsapp|leads|prospectos/.test(t)) return 'Prospectos / WhatsApp';
+    if (/youtube/.test(t)) return 'YouTube';
+    if (/invertir|invirtien|presupuesto|roas|cpa|costos|costando/.test(t)) return 'Inversión';
+    if (/error|fall|frecuencia alta|no se puede mejorar/.test(t)) return 'Errores';
+    return 'Otros';
+  }
+
+  function platformLabel(p) {
+    return (p || '').startsWith('tiktok') ? 'TikTok' : 'Instagram';
+  }
+
+  function median(arr) {
+    if (!arr.length) return 0;
+    const s = arr.slice().sort((a, b) => a - b);
+    const mid = Math.floor(s.length / 2);
+    return s.length % 2 ? s[mid] : (s[mid - 1] + s[mid]) / 2;
+  }
+
+  const QUAD_ADVICE = {
+    repeat:  'Alto alcance y alta interacción. Convierte este ángulo en una serie.',
+    hook:    'Buena interacción pero bajo alcance. El mensaje funciona; necesita una apertura más fuerte.',
+    message: 'El alcance es saludable, pero la respuesta es baja. Aclara el beneficio, la prueba o el llamado a la acción.',
+    stop:    'Bajo alcance y baja interacción. Replantea el ángulo antes de publicar contenido similar.'
+  };
+
+  // Mini SVG chart helpers (no library)
+  function niceMax(v) {
+    if (v <= 0) return 10;
+    const exp = Math.pow(10, Math.floor(Math.log10(v)));
+    const f = v / exp;
+    if (f <= 1) return exp;
+    if (f <= 2) return 2 * exp;
+    if (f <= 5) return 5 * exp;
+    return 10 * exp;
+  }
+  function fmtAxisNum(v) {
+    if (Math.abs(v) >= 1e6) return (v/1e6).toFixed(1) + 'M';
+    if (Math.abs(v) >= 1e3) return (v/1e3).toFixed(1) + 'K';
+    return Math.round(v).toString();
+  }
+
+  function svgBarChart(container, opts) {
+    if (!container) return;
+    const { labels, datasets, rotateLabels = false, showLegend = true } = opts;
+    const W = 480;
+    const H = rotateLabels ? 280 : 240;
+    const padL = 50, padR = 14, padT = 14;
+    const padB = rotateLabels ? 90 : (showLegend && datasets.some(d => d.label) ? 56 : 30);
+    const innerW = W - padL - padR;
+    const innerH = H - padT - padB;
+
+    const allV = datasets.flatMap(d => (d.data || []).filter(v => typeof v === 'number'));
+    const max = niceMax(Math.max(...allV, 1));
+    const yScale = v => padT + innerH - (v / max) * innerH;
+
+    const groupW = innerW / labels.length;
+    const barCount = datasets.length;
+    const barW = Math.min(36, Math.max(8, (groupW * 0.65) / barCount));
+    const ticks = 5;
+
+    let s = `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid meet" style="width:100%;height:100%;font-family:inherit;">`;
+
+    for (let i = 0; i <= ticks; i++) {
+      const v = (max / ticks) * i;
+      const y = yScale(v);
+      s += `<line x1="${padL}" x2="${W - padR}" y1="${y}" y2="${y}" stroke="#F1F5F9"/>`;
+      s += `<text x="${padL - 6}" y="${y + 3}" text-anchor="end" font-size="10" fill="#94A3B8">${fmtAxisNum(v)}</text>`;
+    }
+
+    labels.forEach((lbl, i) => {
+      const groupX = padL + i * groupW;
+      const groupCenter = groupX + groupW / 2;
+      datasets.forEach((ds, j) => {
+        const v = ds.data[i] || 0;
+        const x = groupCenter - (barCount * barW) / 2 + j * barW;
+        const y = yScale(v);
+        const h = (padT + innerH) - y;
+        s += `<rect x="${x}" y="${y}" width="${barW - 2}" height="${h}" fill="${ds.color}" rx="2">`;
+        s += `<title>${(ds.label || lbl)}: ${v.toLocaleString('es-PE')}</title></rect>`;
+      });
+      if (rotateLabels) {
+        s += `<text x="${groupCenter}" y="${H - padB + 14}" text-anchor="end" font-size="10" fill="#475569" transform="rotate(-30 ${groupCenter} ${H - padB + 14})">${escapeHtml(lbl)}</text>`;
+      } else {
+        s += `<text x="${groupCenter}" y="${H - padB + 16}" text-anchor="middle" font-size="11" fill="#475569">${escapeHtml(lbl)}</text>`;
+      }
+    });
+
+    if (showLegend && datasets.some(d => d.label)) {
+      let lx = padL;
+      const ly = H - 18;
+      datasets.forEach(ds => {
+        if (!ds.label) return;
+        s += `<rect x="${lx}" y="${ly}" width="10" height="10" fill="${ds.color}" rx="2"/>`;
+        s += `<text x="${lx + 14}" y="${ly + 9}" font-size="10" fill="#475569">${escapeHtml(ds.label)}</text>`;
+        lx += 14 + (ds.label.length * 5.5) + 16;
+      });
+    }
+
+    s += '</svg>';
+    container.innerHTML = s;
+  }
+
+  function svgScatter(container, opts) {
+    if (!container) return;
+    const { datasets, xLabel = '', yLabel = '' } = opts;
+    const W = 480, H = 270;
+    const padL = 55, padR = 14, padT = 12, padB = 60;
+    const innerW = W - padL - padR;
+    const innerH = H - padT - padB;
+
+    const allX = datasets.flatMap(d => d.data.map(p => p.x || 0));
+    const allY = datasets.flatMap(d => d.data.map(p => p.y || 0));
+    const xMax = niceMax(Math.max(...allX, 1));
+    const yMax = niceMax(Math.max(...allY, 1));
+
+    const xScale = v => padL + (v / xMax) * innerW;
+    const yScale = v => padT + innerH - (v / yMax) * innerH;
+
+    let s = `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid meet" style="width:100%;height:100%;font-family:inherit;">`;
+
+    for (let i = 0; i <= 4; i++) {
+      const v = (yMax / 4) * i;
+      const y = yScale(v);
+      s += `<line x1="${padL}" x2="${W - padR}" y1="${y}" y2="${y}" stroke="#F1F5F9"/>`;
+      s += `<text x="${padL - 6}" y="${y + 3}" text-anchor="end" font-size="10" fill="#94A3B8">${v.toFixed(1)}%</text>`;
+    }
+    for (let i = 0; i <= 4; i++) {
+      const v = (xMax / 4) * i;
+      const x = xScale(v);
+      s += `<text x="${x}" y="${H - padB + 16}" text-anchor="middle" font-size="10" fill="#94A3B8">${fmtAxisNum(v)}</text>`;
+    }
+
+    s += `<text x="${padL + innerW / 2}" y="${H - padB + 34}" text-anchor="middle" font-size="11" fill="#475569">${escapeHtml(xLabel)}</text>`;
+    s += `<text x="14" y="${padT + innerH / 2}" text-anchor="middle" font-size="11" fill="#475569" transform="rotate(-90 14 ${padT + innerH / 2})">${escapeHtml(yLabel)}</text>`;
+
+    datasets.forEach(ds => {
+      ds.data.forEach(p => {
+        const x = xScale(p.x || 0);
+        const y = yScale(p.y || 0);
+        s += `<circle cx="${x}" cy="${y}" r="4" fill="${ds.color}" fill-opacity="0.8" stroke="${ds.color}" stroke-width="1">`;
+        s += `<title>${escapeHtml((p.t || '').slice(0, 80))} - ${(p.x || 0).toLocaleString('es-PE')} v - ${(p.y || 0).toFixed(2)}%</title>`;
+        s += '</circle>';
+      });
+    });
+
+    let lx = padL;
+    const ly = H - 18;
+    datasets.forEach(ds => {
+      s += `<circle cx="${lx + 5}" cy="${ly + 5}" r="4" fill="${ds.color}"/>`;
+      s += `<text x="${lx + 14}" y="${ly + 9}" font-size="10" fill="#475569">${escapeHtml(ds.label)}</text>`;
+      lx += 14 + (ds.label.length * 5.5) + 16;
+    });
+
+    s += '</svg>';
+    container.innerHTML = s;
+  }
+
+  function renderCharts() {
+    if (!M || !Array.isArray(M.top_posts)) return;
+    const posts = M.top_posts;
+
+    // 1. Rendimiento por plataforma
+    const igAlcance = M.instagram.impressions || 0;
+    const ttAlcance = M.tiktok.views || 0;
+    const igGain = Math.round((M.instagram.followers || 0) * (M.instagram.followers_change_pct || 0) / 100);
+    const ttGain = Math.round((M.tiktok.followers   || 0) * (M.tiktok.followers_change_pct   || 0) / 100);
+    svgBarChart($('#chartPlatform'), {
+      labels: ['TikTok', 'Instagram'],
+      datasets: [
+        { label: 'Alcance', data: [ttAlcance, igAlcance], color: PALETTE.tt },
+        { label: 'Seguidores ganados', data: [ttGain, igGain], color: PALETTE.purple }
+      ]
+    });
+
+    // 2. Matriz alcance vs engagement
+    const ttPosts = posts.filter(p => (p.platform || '').startsWith('tiktok') && p.engagement != null);
+    const igPosts = posts.filter(p => !(p.platform || '').startsWith('tiktok') && p.engagement != null);
+    svgScatter($('#chartMatrix'), {
+      xLabel: 'Visualizaciones',
+      yLabel: 'Engagement %',
+      datasets: [
+        { label: 'TikTok',    color: PALETTE.tt, data: ttPosts.map(p => ({ x: p.views || 0, y: p.engagement || 0, t: p.text })) },
+        { label: 'Instagram', color: PALETTE.ig, data: igPosts.map(p => ({ x: p.views || 0, y: p.engagement || 0, t: p.text })) }
+      ]
+    });
+
+    // 3. Mejores temas por alcance
+    const byTopic = {};
+    posts.forEach(p => {
+      const t = classifyTopic(p.text);
+      if (t === 'Sin texto') return;
+      byTopic[t] = (byTopic[t] || 0) + (p.views || 0);
+    });
+    const topicEntries = Object.entries(byTopic).sort((a, b) => b[1] - a[1]).slice(0, 8);
+    svgBarChart($('#chartTopics'), {
+      labels: topicEntries.map(e => e[0]),
+      datasets: [{ label: '', data: topicEntries.map(e => e[1]), color: PALETTE.tt }],
+      rotateLabels: true,
+      showLegend: false
+    });
+
+    // 4. Mejores ganchos
+    const ranked = posts
+      .filter(p => p.engagement != null && p.engagement > 0 && p.text && !p.text.includes('sin texto'))
+      .sort((a, b) => b.engagement - a.engagement)
+      .slice(0, 5);
+    const rankList = $('#rankList');
+    if (rankList) {
+      rankList.innerHTML = ranked.map((p, i) => {
+        const topic = classifyTopic(p.text);
+        const plat = platformLabel(p.platform);
+        const engClass = p.engagement >= 5 ? 'green' : p.engagement >= 2.5 ? 'amber' : 'red';
+        const platClass = plat === 'TikTok' ? 'gray' : 'purple';
+        return `<div class="rank-item">
+          <span class="rank-num">#${i + 1}</span>
+          <div class="rank-title">${escapeHtml(p.text.replace(/^[\s\W]+/, '').slice(0, 110))}</div>
+          <div class="rank-tags">
+            <span class="pill ${platClass}">${plat}</span>
+            <span class="pill blue">${escapeHtml(topic)}</span>
+            <span class="pill ${engClass}">${p.engagement.toFixed(1)}%</span>
+          </div>
+        </div>`;
+      }).join('');
+    }
+
+    // 5. Decisiones estrategicas (cuadrantes)
+    const viewsList = posts.map(p => p.views || 0).filter(v => v > 0);
+    const engsList = posts.filter(p => p.engagement != null).map(p => p.engagement);
+    const medV = median(viewsList);
+    const medE = median(engsList);
+
+    const matrix = { repeat: [], hook: [], message: [], stop: [] };
+    posts.forEach(p => {
+      if (!p.text || p.text.includes('sin texto')) return;
+      if (p.engagement == null) return;
+      const highV = (p.views || 0) >= medV;
+      const highE = p.engagement >= medE;
+      const q = highV && highE ? 'repeat' : !highV && highE ? 'hook' : highV && !highE ? 'message' : 'stop';
+      matrix[q].push(p);
+    });
+
+    Object.entries(matrix).forEach(([q, list]) => {
+      const col = document.querySelector(`#matrixGrid [data-quad="${q}"]`);
+      if (!col) return;
+      col.querySelectorAll('.matrix-card, .matrix-empty').forEach(n => n.remove());
+      if (!list.length) {
+        const empty = document.createElement('div');
+        empty.className = 'matrix-empty';
+        empty.textContent = 'Sin posts en este cuadrante';
+        col.appendChild(empty);
+        return;
+      }
+      list.slice(0, 6).forEach(p => {
+        const card = document.createElement('div');
+        card.className = 'matrix-card';
+        const title = (p.text || '').replace(/^[\s\W]+/, '').slice(0, 90);
+        card.innerHTML = `
+          <div class="matrix-title">${escapeHtml(title)}</div>
+          <div class="matrix-desc">${QUAD_ADVICE[q]}</div>
+        `;
+        col.appendChild(card);
+      });
+    });
+
+    // ─── 6. Formato del reel ganador ───
+    const ttTop = posts
+      .filter(p => p.engagement != null && p.engagement >= 1.5 && (p.platform || '').startsWith('tiktok'));
+    const durations = ttTop.filter(p => p.duration_s).map(p => p.duration_s).filter(d => d > 0);
+    const medDur = durations.length ? Math.round(median(durations)) : null;
+    const minDur = durations.length ? Math.min(...durations) : null;
+    const maxDur = durations.length ? Math.max(...durations) : null;
+
+    // Mejor franja horaria (de top performers TT)
+    const hourBuckets = { mañana: 0, mediodia: 0, tarde: 0, noche: 0 };
+    ttTop.forEach(p => {
+      if (!p.time) return;
+      const h = parseInt(p.time.split(':')[0], 10);
+      if (h >= 5  && h < 12) hourBuckets['mañana']++;
+      else if (h >= 12 && h < 15) hourBuckets['mediodia']++;
+      else if (h >= 15 && h < 19) hourBuckets['tarde']++;
+      else hourBuckets['noche']++;
+    });
+    const topBucket = Object.entries(hourBuckets).sort((a, b) => b[1] - a[1])[0];
+    const bucketLabels = { 'mañana': 'Mañana (5-12h)', 'mediodia': 'Mediodía (12-15h)', 'tarde': 'Tarde (15-19h)', 'noche': 'Noche (19-5h)' };
+
+    // % de tops que abren con emoji
+    const emojiRe = /^[\s]*[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}]/u;
+    const emojiCount = ttTop.filter(p => emojiRe.test(p.text || '')).length;
+    const emojiPct = ttTop.length ? Math.round(emojiCount / ttTop.length * 100) : 0;
+
+    const formatStatsEl = $('#formatStats');
+    if (formatStatsEl) {
+      formatStatsEl.innerHTML = `
+        <div class="kpi-card">
+          <div class="kpi-icon blue"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+          <div class="kpi-lbl">Duración óptima</div>
+          <div class="kpi-val blue">${medDur ? medDur + 's' : '15-20s'}</div>
+          <div class="kpi-sub">${minDur && maxDur ? `Rango ${minDur}-${maxDur}s · mediana de top performers TikTok` : 'Top performers TikTok'}</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-icon amber"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/></svg></div>
+          <div class="kpi-lbl">Mejor franja</div>
+          <div class="kpi-val amber" style="font-size:18px;">${bucketLabels[topBucket[0]]}</div>
+          <div class="kpi-sub">${topBucket[1]} de los top posts publicados aquí</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-icon green"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></div>
+          <div class="kpi-lbl">Apertura con emoji</div>
+          <div class="kpi-val green">${emojiPct}%</div>
+          <div class="kpi-sub">${emojiCount} de ${ttTop.length} top performers TT</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-icon purple"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
+          <div class="kpi-lbl">Eje ganador</div>
+          <div class="kpi-val purple" style="font-size:18px;">Educativo</div>
+          <div class="kpi-sub">Meta Ads · Google Ads · Shopify dominan el top</div>
+        </div>
+      `;
+    }
+
+    // ─── 7. Recomendaciones de nuevos reels ───
+    const recGrid = $('#recGrid');
+    if (recGrid && Array.isArray(M.recommendations)) {
+      recGrid.innerHTML = M.recommendations.map(r => {
+        const platClass  = r.platform === 'instagram' ? 'ig' : 'tt';
+        const platPill   = r.platform === 'instagram' ? 'purple' : 'gray';
+        const platLabel  = r.platform === 'instagram' ? 'Instagram' : 'TikTok';
+        const priorityCls = r.priority === 'alta' ? 'red' : r.priority === 'media' ? 'amber' : 'gray';
+        return `<div class="rec-card ${platClass}">
+          <div class="rec-head">
+            <span class="pill ${platPill}">${platLabel}</span>
+            <span class="pill blue">${escapeHtml(r.axis)}</span>
+            <span class="pill ${priorityCls}">${escapeHtml(r.priority)}</span>
+          </div>
+          <div class="rec-title">${escapeHtml(r.title)}</div>
+          <div class="rec-format">${escapeHtml(r.format)}</div>
+          <div class="rec-rationale">${escapeHtml(r.rationale)}</div>
+        </div>`;
+      }).join('');
+    }
+  }
+
+  renderCharts();
+
+  // ═══ Sidebar anchor scrolling ═══
+  // Como .main tiene overflow-y:auto, las hash-links no scrollean solas.
+  // Interceptamos y llamamos scrollIntoView sobre el target.
+  $$('.sidebar a[href^="#"]').forEach(link => {
+    link.addEventListener('click', e => {
+      const id = link.getAttribute('href').slice(1);
+      const target = document.getElementById(id);
+      if (!target) return;
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      $$('.sidebar a[href^="#"]').forEach(x => x.classList.remove('active'));
+      link.classList.add('active');
+    });
+  });
+
+  // Botón aprobar
+  const btn = $('#btnApprove');
+  if (btn) btn.addEventListener('click', () => {
+    btn.textContent = '✓ Avisa al asistente en chat';
+    setTimeout(() => btn.textContent = 'Aprobar plan', 2200);
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,433 @@
+{
+  "meta": {
+    "from": "2026-01-01",
+    "to": "2026-04-24",
+    "days": 114,
+    "generated_at": "2026-04-25T00:00:00",
+    "source": "manual-from-pdf",
+    "brand": "Agencia Lima Retail",
+    "handle": "@agencialimaretail"
+  },
+  "summary": {
+    "followers": {
+      "total": 774,
+      "change_pct": 1.04
+    },
+    "impressions": {
+      "total": 19190,
+      "change_pct": -28.09
+    },
+    "interactions": {
+      "total": 96,
+      "change_pct": 88.24
+    },
+    "posts": {
+      "total": 228,
+      "change_pct": -30.91
+    }
+  },
+  "instagram": {
+    "followers": 474,
+    "followers_change_pct": 1.28,
+    "impressions": 9716,
+    "impressions_change_pct": -38.69,
+    "posts": 190,
+    "posts_change_pct": -35.81,
+    "interactions": 5,
+    "interactions_change_pct": -16.67,
+    "reels": {
+      "count": 25,
+      "avg_reach": 32.24,
+      "avg_reach_change_pct": -46.56,
+      "engagement": 0.5,
+      "engagement_change_pct": 49.71
+    },
+    "stories": {
+      "count": 163,
+      "replies": 0,
+      "impressions": 935,
+      "impressions_change_pct": -50.29
+    },
+    "audience": {
+      "top_country": "Perú",
+      "top_country_pct": 85.25,
+      "top_city": "Lima",
+      "top_city_pct": 69.85
+    }
+  },
+  "tiktok": {
+    "followers": 300,
+    "followers_change_pct": 0.67,
+    "views": 10110,
+    "views_change_pct": 72.53,
+    "posts": 38,
+    "posts_change_pct": 11.76,
+    "interactions": 91,
+    "interactions_change_pct": 102.22,
+    "engagement": 0.96,
+    "engagement_change_pct": 17.22,
+    "avg_reach": 249.24,
+    "avg_reach_change_pct": 54.35,
+    "audience": {
+      "top_country": "Perú",
+      "top_country_pct": 59.32,
+      "secondary": "Bolivia 4.75% · México 2.71%"
+    }
+  },
+  "top_posts": [
+    {
+      "platform": "tiktok",
+      "date": "2026-02-26",
+      "text": "📊 En Google Ads no se puede mejorar lo que no se mide.",
+      "views": 236,
+      "likes": 7,
+      "engagement": 3.3,
+      "time": "16:03",
+      "duration_s": 16
+    },
+    {
+      "platform": "tiktok",
+      "date": "2026-01-02",
+      "text": "🚀 Aprende a crear campañas efectivas en Facebook Ads · Curso avanzado de Meta Ads.",
+      "views": 208,
+      "likes": 7,
+      "engagement": 3.72,
+      "time": "00:09",
+      "duration_s": 17
+    },
+    {
+      "platform": "tiktok",
+      "date": "2026-04-07",
+      "text": "🎯 ¿Tu campaña en Meta Ads tiene el objetivo correcto? WhatsApp, e-commerce o tienda.",
+      "views": 528,
+      "likes": 6,
+      "engagement": 1.19,
+      "time": "12:06",
+      "duration_s": 17
+    },
+    {
+      "platform": "tiktok",
+      "date": "2026-02-12",
+      "text": "💻 ¿Vendes productos pero tu empresa aún no cuenta con e-commerce? Shopify.",
+      "views": 143,
+      "likes": 6,
+      "engagement": 4.88,
+      "time": "19:02",
+      "duration_s": 29
+    },
+    {
+      "platform": "tiktok",
+      "date": "2026-01-19",
+      "text": "🚀 En Lima Retail lanzamos tu primera campaña publicitaria para vender online.",
+      "views": 232,
+      "likes": 6,
+      "engagement": 2.82,
+      "time": "17:21",
+      "duration_s": 31
+    },
+    {
+      "platform": "tiktok",
+      "date": "2026-03-26",
+      "text": "💰 Usa Google Ads para generar ventas, no solo clics.",
+      "views": 174,
+      "likes": 5,
+      "engagement": 2.92,
+      "time": "16:03",
+      "duration_s": 16
+    },
+    {
+      "platform": "tiktok",
+      "date": "2026-01-08",
+      "text": "🚀 Aprender Meta Ads es el primer paso para crecer.",
+      "views": 191,
+      "likes": 5,
+      "engagement": 2.78,
+      "time": "12:36",
+      "duration_s": 19
+    },
+    {
+      "platform": "tiktok",
+      "date": "2026-03-31",
+      "text": "(video sin texto)",
+      "views": 425,
+      "likes": 4,
+      "engagement": 0.98,
+      "time": "14:02",
+      "duration_s": 16
+    },
+    {
+      "platform": "tiktok",
+      "date": "2026-03-30",
+      "text": "(video sin texto)",
+      "views": 344,
+      "likes": 4,
+      "engagement": 1.16,
+      "time": "14:03",
+      "duration_s": 14
+    },
+    {
+      "platform": "tiktok",
+      "date": "2026-01-12",
+      "text": "🛒 Lanza tu tienda Shopify lista para vender este 2026.",
+      "views": 213,
+      "likes": 4,
+      "engagement": 2.0,
+      "time": "12:20",
+      "duration_s": 18
+    },
+    {
+      "platform": "tiktok",
+      "date": "2026-01-08",
+      "text": "¿Estás invirtiendo en Google Ads? Te ayudamos con palabras clave.",
+      "views": 333,
+      "likes": 4,
+      "engagement": 1.26,
+      "time": "12:23",
+      "duration_s": 15
+    },
+    {
+      "platform": "tiktok",
+      "date": "2026-04-24",
+      "text": "📱 ¿TikTok Ads funciona para tu negocio?",
+      "views": 158,
+      "likes": 3,
+      "engagement": null,
+      "time": "12:32",
+      "duration_s": 17
+    },
+    {
+      "platform": "tiktok",
+      "date": "2026-04-03",
+      "text": "(video sin texto)",
+      "views": 559,
+      "likes": 3,
+      "engagement": 0.54,
+      "time": "14:02",
+      "duration_s": 20
+    },
+    {
+      "platform": "tiktok",
+      "date": "2026-04-01",
+      "text": "(video sin texto)",
+      "views": 334,
+      "likes": 3,
+      "engagement": 0.92,
+      "time": "14:03",
+      "duration_s": 16
+    },
+    {
+      "platform": "tiktok",
+      "date": "2026-04-22",
+      "text": "¿Y si pudieras ver cuántos leads y ventas puedes generar antes de invertir?",
+      "views": 238,
+      "likes": 2,
+      "engagement": 0.98,
+      "time": "22:57",
+      "duration_s": 0
+    },
+    {
+      "platform": "tiktok",
+      "date": "2026-04-16",
+      "text": "📱 Perú tiene más de 16 millones de usuarios en TikTok.",
+      "views": 468,
+      "likes": 2,
+      "engagement": 0.43,
+      "time": "09:03",
+      "duration_s": 17
+    },
+    {
+      "platform": "tiktok",
+      "date": "2026-04-09",
+      "text": "💸 ¿Google Ads te está costando demasiado?",
+      "views": 471,
+      "likes": 2,
+      "engagement": 0.43,
+      "time": "13:06",
+      "duration_s": 13
+    },
+    {
+      "platform": "tiktok",
+      "date": "2026-04-04",
+      "text": "(video sin texto)",
+      "views": 474,
+      "likes": 2,
+      "engagement": 0.43,
+      "time": "14:02",
+      "duration_s": 16
+    },
+    {
+      "platform": "tiktok",
+      "date": "2026-03-20",
+      "text": "📊 Saber qué funciona en Google Ads te ayuda a vender.",
+      "views": 189,
+      "likes": 2,
+      "engagement": 1.21,
+      "time": "17:08",
+      "duration_s": 20
+    },
+    {
+      "platform": "tiktok",
+      "date": "2026-02-13",
+      "text": "📺 Muestra tu servicio en YouTube.",
+      "views": 144,
+      "likes": 2,
+      "engagement": 1.57,
+      "time": "15:46",
+      "duration_s": 17
+    },
+    {
+      "platform": "tiktok",
+      "date": "2026-02-17",
+      "text": "📺 Muestra tu servicio en YouTube a miles de personas.",
+      "views": 201,
+      "likes": 2,
+      "engagement": null,
+      "time": "18:37"
+    },
+    {
+      "platform": "tiktok",
+      "date": "2026-02-04",
+      "text": "🔍 Aparece en Google cuando tus clientes te buscan.",
+      "views": 208,
+      "likes": 0,
+      "engagement": null,
+      "time": "12:06"
+    },
+    {
+      "platform": "tiktok",
+      "date": "2026-04-14",
+      "text": "📉 ¿Frecuencia alta pero resultados bajos? Tu audiencia ya dejó de prestarle atención.",
+      "views": 510,
+      "likes": 1,
+      "engagement": null,
+      "time": "09:04"
+    },
+    {
+      "platform": "tiktok",
+      "date": "2026-04-05",
+      "text": "(video sin texto)",
+      "views": 561,
+      "likes": 1,
+      "engagement": null,
+      "time": "16:02"
+    },
+    {
+      "platform": "tiktok",
+      "date": "2026-04-02",
+      "text": "(video sin texto)",
+      "views": 558,
+      "likes": 1,
+      "engagement": null,
+      "time": "14:02"
+    },
+    {
+      "platform": "tiktok",
+      "date": "2026-03-31",
+      "text": "🛍️ Muestra tus productos directo en Google con imagen, precio y marca.",
+      "views": 543,
+      "likes": 0,
+      "engagement": null,
+      "time": "16:03"
+    },
+    {
+      "platform": "instagram-post",
+      "date": "2026-04-22",
+      "text": "¿Y si pudieras ver cuántos leads y ventas puedes generar antes de invertir?",
+      "views": 19,
+      "likes": 1,
+      "engagement": 11.11,
+      "time": "22:57",
+      "duration_s": 0
+    },
+    {
+      "platform": "instagram-reel",
+      "date": "2026-02-22",
+      "text": "🔍 Muestra tu servicio en Google Ads, ya sea en búsqueda u otros formatos.",
+      "views": 47,
+      "likes": 1,
+      "engagement": 5.26
+    }
+  ],
+  "recommendations": [
+    {
+      "platform": "tiktok",
+      "axis": "Errores",
+      "title": "Los 3 errores más caros en Meta Ads (Perú 2026)",
+      "format": "16s · dolor → solución → CTA",
+      "rationale": "Errores es el tema con mayor alcance acumulado. Top performer '📊 En Google Ads no se puede mejorar lo que no se mide' (7 likes, 3.30% eng) muestra que el ángulo error/medición resuena fuerte.",
+      "priority": "alta"
+    },
+    {
+      "platform": "tiktok",
+      "axis": "Comparaciones",
+      "title": "Meta Ads vs Google Ads: ¿cuál usar para tu PyME?",
+      "format": "20s · comparativa visual",
+      "rationale": "Comparaciones es un eje sin contenido publicado todavía pero con potencial. Los top hooks tocan 'objetivo correcto' (Meta) y 'palabras clave' (Google) — una comparación frontal cubre ambas audiencias en una pieza.",
+      "priority": "alta"
+    },
+    {
+      "platform": "tiktok",
+      "axis": "Inversión",
+      "title": "Cuánto invertir en tu primera campaña (Perú · S/30 al día)",
+      "format": "18s · paso a paso",
+      "rationale": "El ángulo 'primer paso' aparece en 2 del top 5: 'Lanzamos tu primera campaña' (6 likes) y 'Aprender Meta Ads primer paso' (5 likes). Un número concreto en soles peruanos pega al mercado local.",
+      "priority": "alta"
+    },
+    {
+      "platform": "tiktok",
+      "axis": "TikTok Ads",
+      "title": "TikTok Ads en Perú: cómo arrancar con S/30 al día",
+      "format": "17s · educativo + local",
+      "rationale": "El reel 'Perú tiene más de 16 millones de usuarios en TikTok' tiene 468 v pero solo 2 likes (0.43%). Pivotear de 'cifra impresionante' a 'cómo arrancas tú' activa la conversión.",
+      "priority": "media"
+    },
+    {
+      "platform": "tiktok",
+      "axis": "Comercio electrónico",
+      "title": "¿Vendes sin Shopify? Te muestro qué te estás perdiendo",
+      "format": "29s · caso + cifras",
+      "rationale": "El top performer '💻 ¿Vendes productos pero tu empresa aún no cuenta con e-commerce?' (143 v, 6 likes, 4.88% eng) tiene el engagement más alto del periodo. Replicar la fórmula con un caso concreto.",
+      "priority": "alta"
+    },
+    {
+      "platform": "tiktok",
+      "axis": "Resultados",
+      "title": "Caso real: bajamos S/X de CPA en una semana",
+      "format": "30-60s · narrativa + datos",
+      "rationale": "El eje 'Resultados/casos' está sub-utilizado: ningún post del periodo lo explota. Un caso con número concreto diferencia la marca de los educativos genéricos y atrae solicitud de auditoría.",
+      "priority": "media"
+    },
+    {
+      "platform": "tiktok",
+      "axis": "Errores",
+      "title": "Si tu Google Ads no vende, mira esto primero",
+      "format": "15s · dolor → diagnóstico",
+      "rationale": "Los temas Errores + Google Ads son los dos con mayor alcance. Combinar dolor específico ('no vende') con eje técnico (Google Ads) es la fórmula de '💰 Usa Google Ads para generar ventas' (5 likes, 2.92% eng).",
+      "priority": "media"
+    },
+    {
+      "platform": "instagram",
+      "axis": "Beneficio",
+      "title": "Aparece en Google sin pelearte con un experto",
+      "format": "15s · benefit-led",
+      "rationale": "El top reel de IG ('🔍 Aparece en Google cuando tus clientes te buscan', 208 v / 174 reach) abre con beneficio, no con dolor. En IG el lenguaje positivo desempeña mejor que el dolor que funciona en TikTok.",
+      "priority": "alta"
+    },
+    {
+      "platform": "instagram",
+      "axis": "Casos",
+      "title": "Antes y después: 3 cambios en una landing que duplicaron leads",
+      "format": "20s · transformación visual",
+      "rationale": "Los reels de IG promedian <50 views (alcance/reel 32.24, −47% vs periodo anterior). 'Antes/después' con visuals concretos rompe el patrón del contenido educativo plano que la audiencia limeña ya ignora.",
+      "priority": "alta"
+    },
+    {
+      "platform": "instagram",
+      "axis": "Comercio electrónico",
+      "title": "5 detalles de tu Shopify que están matando tus ventas",
+      "format": "carrusel + reel teaser de 10s",
+      "rationale": "70% de la audiencia IG es Lima — PyMEs con o sin tienda. Carrusel para feed (formato donde IG aún recompensa con alcance) + reel teaser corto que lleva al carrusel. Combina dos formatos en una pieza.",
+      "priority": "media"
+    }
+  ]
+}
