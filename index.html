@@ -280,6 +280,31 @@
 
   section[id] { scroll-margin-top: 16px; }
 
+  /* ═══ Prompt para IA ═══ */
+  .prompt-block {
+    background: #0F172A;
+    color: #E2E8F0;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 12px;
+    line-height: 1.65;
+    padding: 18px 22px;
+    border-radius: var(--r);
+    white-space: pre-wrap;
+    overflow: auto;
+    margin: 0;
+    max-height: 540px;
+    border: 1px solid #1E293B;
+  }
+  .prompt-block::-webkit-scrollbar { width: 8px; }
+  .prompt-block::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+  .prompt-meta {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 10px;
+    display: flex; gap: 18px; flex-wrap: wrap;
+  }
+  .prompt-meta b { color: var(--text); font-weight: 600; }
+
   /* ═══ Paginación ═══ */
   .pagination {
     display: flex;
@@ -1170,6 +1195,7 @@
     <a href="#decisiones"        class="s-item">Decisiones estratégicas</a>
     <a href="#formato"           class="s-item">Formato del reel</a>
     <a href="#recomendaciones"   class="s-item">Recomendaciones</a>
+    <a href="#prompt"            class="s-item">Prompt para IA</a>
 
 
     <hr class="s-div" />
@@ -1448,6 +1474,29 @@
         </div>
         <div class="insight info" style="margin-top: 14px">
           <b>Cómo leer estas recomendaciones.</b> Cada tarjeta toma un patrón observado en el reporte (top performer, eje sub-explotado, tema con tracción) y lo convierte en un reel concreto a producir. Prioridad <b>alta</b> = tiene evidencia directa de que ya funciona o es la oportunidad más clara. <b>Media</b> = es replanteo de algo que está cerca pero no convierte.
+        </div>
+      </section>
+
+      <!-- ═══════ PROMPT PARA IA ═══════ -->
+      <section id="prompt">
+        <div class="sec-lbl">Prompt para IA · generar nuevas ideas</div>
+        <div class="sec-desc">Prompt autogenerado a partir del análisis del periodo. <b>Cópialo y pégalo en Claude o cualquier IA</b> para producir nuevas variantes de reels alineadas a lo que ya está funcionando. Se regenera solo cuando se actualizan los datos del PDF.</div>
+        <div class="panel">
+          <div class="panel-head">
+            <div>
+              <div class="panel-title">Prompt listo para copiar</div>
+              <div class="panel-sub">Rol · contexto del periodo · top performers · formato ganador · restricciones · formato de salida</div>
+            </div>
+            <div>
+              <button class="btn primary" id="btnCopyPrompt">Copiar prompt</button>
+            </div>
+          </div>
+          <pre class="prompt-block" id="promptBlock">Generando…</pre>
+          <div class="prompt-meta">
+            <span><b>Modelo recomendado:</b> Claude Opus 4.7 o Sonnet 4.6</span>
+            <span><b>Output esperado:</b> 8 ideas estructuradas + tabla resumen</span>
+            <span><b>Costo aprox.:</b> 1-3¢ USD por generación</span>
+          </div>
         </div>
       </section>
 
@@ -2043,6 +2092,114 @@
   }
 
   renderCharts();
+
+  // ═══ Prompt para IA ═══
+  function generatePrompt() {
+    if (!M || !Array.isArray(M.top_posts)) return '';
+    const posts = M.top_posts;
+    const period = M.meta.from + ' a ' + M.meta.to;
+
+    // Top hooks por engagement
+    const ranked = posts
+      .filter(p => p.engagement && p.engagement > 0 && p.text && !p.text.includes('sin texto'))
+      .sort((a, b) => b.engagement - a.engagement)
+      .slice(0, 6);
+
+    // Top temas por alcance
+    const byTopic = {};
+    posts.forEach(p => {
+      const t = classifyTopic(p.text);
+      if (t === 'Sin texto') return;
+      byTopic[t] = (byTopic[t] || 0) + (p.views || 0);
+    });
+    const topTopics = Object.entries(byTopic).sort((a, b) => b[1] - a[1]).slice(0, 6);
+
+    // Formato del top performer
+    const ttTops = posts.filter(p => p.engagement && p.engagement >= 1.5 && (p.platform || '').startsWith('tiktok'));
+    const durations = ttTops.filter(p => p.duration_s).map(p => p.duration_s).filter(d => d > 0);
+    const medDur = durations.length ? Math.round(median(durations)) : 17;
+
+    const tt = M.tiktok, ig = M.instagram;
+
+    const rankedLines = ranked.map((p, i) => {
+      const plat = (p.platform || '').startsWith('tiktok') ? 'TikTok' : 'IG';
+      const text = p.text.replace(/^[\s\W]+/, '').slice(0, 100);
+      return (i + 1) + '. [' + plat + '] "' + text + '" — ' + p.engagement.toFixed(2) + '% eng, ' + p.likes + ' likes, ' + p.views + ' v';
+    }).join('\n');
+
+    const topicLines = topTopics.map(t => '- ' + t[0] + ': ' + t[1].toLocaleString('es-PE') + ' visualizaciones acumuladas').join('\n');
+
+    return [
+      'Actúa como creador de contenido y estratega de redes sociales para Agencia Lima Retail, una agencia peruana de marketing digital especializada en performance ads para PyMEs.',
+      '',
+      '═══ CONTEXTO DEL PERIODO (' + period + ') ═══',
+      'TikTok creció: ' + (tt.interactions_change_pct >= 0 ? '+' : '') + tt.interactions_change_pct + '% interacciones · ' + (tt.views_change_pct >= 0 ? '+' : '') + tt.views_change_pct + '% visualizaciones · ' + (tt.avg_reach_change_pct >= 0 ? '+' : '') + tt.avg_reach_change_pct + '% alcance promedio/post.',
+      'Instagram cayó: ' + ig.impressions_change_pct + '% impresiones · ' + ig.posts_change_pct + '% publicaciones · alcance/reel ' + ig.reels.avg_reach_change_pct + '%.',
+      'Audiencia: ' + ig.audience.top_country_pct + '% Perú · ' + ig.audience.top_city_pct + '% Lima en IG · ' + tt.audience.top_country_pct + '% Perú + Bolivia/México en TikTok.',
+      'Servicios que vendemos: Meta Ads, Google Ads, TikTok Ads, Shopify, curso de Meta Ads avanzado, leads por WhatsApp.',
+      '',
+      '═══ TOP PERFORMERS DEL PERIODO ═══',
+      rankedLines,
+      '',
+      '═══ TEMAS CON MAYOR ALCANCE ACUMULADO ═══',
+      topicLines,
+      '',
+      '═══ FORMATO GANADOR (REPLICAR) ═══',
+      '- Duración objetivo: ~' + medDur + 's en TikTok, 15-20s en Instagram',
+      '- Apertura (primeros 3 segundos): emoji + pregunta-dolor o imperativo. Ejemplos del periodo: 📊 ¿... no se mide?  ·  🎯 ¿Tu campaña tiene el objetivo correcto?  ·  💻 ¿Vendes sin e-commerce?',
+      '- Estructura: dolor (3s) → solución/cómo lo resolvemos (8-10s) → CTA único (3s)',
+      '- Lenguaje: 2da persona, imperativo ("Aprende", "Lanza", "Aparece", "Usa")',
+      '- Texto en pantalla siempre — no depender del audio',
+      '- CTA final concreto: "Escríbeme", "Link en bio", "WhatsApp" — nunca dos CTAs simultáneos',
+      '',
+      '═══ TAREA ═══',
+      'Genera 8 ideas de reels nuevos para producir esta semana:',
+      '- 5 para TikTok (canal core, donde ya hay tracción)',
+      '- 3 para Instagram (replantear con hooks benefit-led, no pain-led — el top reel de IG abrió con beneficio: "🔍 Aparece en Google cuando tus clientes te buscan")',
+      '',
+      '═══ PARA CADA IDEA INCLUYE ═══',
+      '1. **Título** del reel (corto, accionable, sirve como nombre interno)',
+      '2. **Plataforma** (TikTok / Instagram) y **eje temático** (Errores / Comparaciones / Inversión / Comercio electrónico / TikTok Ads / Resultados / Beneficio)',
+      '3. **Hook** exacto: las primeras 1-2 líneas, palabra por palabra, con emoji incluido',
+      '4. **Cuerpo**: cada bloque de tiempo (3s, 5-8s, etc.) con qué decir',
+      '5. **CTA final** exacto',
+      '6. **Rationale**: qué post o patrón observado del periodo sustenta esta idea (cita específica)',
+      '7. **Prioridad** (alta / media): según cuánta evidencia hay de que funcionará',
+      '',
+      '═══ RESTRICCIONES ═══',
+      '- No copiar literalmente los textos existentes — son inspiración, no plantilla',
+      '- Cada idea debe tener un ángulo diferente (no 5 reels sobre Meta Ads — distribuir entre los temas top)',
+      '- Mensaje local-friendly Perú: referencias a S/, PyMEs limeñas, casos cercanos al mercado peruano',
+      '- No proponer contenido "sin texto" — la apertura siempre debe tener emoji + texto en pantalla',
+      '- Para Instagram: pivotar a benefit-led, no replicar el dolor-led de TikTok',
+      '',
+      '═══ FORMATO DE SALIDA ═══',
+      'Markdown con una sección H2 por idea. Al final, una **tabla resumen** con columnas: # · Plataforma · Eje · Título · Prioridad.'
+    ].join('\n');
+  }
+
+  const _promptText = generatePrompt();
+  const _promptEl = $('#promptBlock');
+  if (_promptEl) _promptEl.textContent = _promptText;
+
+  const _copyBtn = $('#btnCopyPrompt');
+  if (_copyBtn) {
+    _copyBtn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(_promptText);
+        _copyBtn.textContent = '✓ Copiado al portapapeles';
+        setTimeout(() => { _copyBtn.textContent = 'Copiar prompt'; }, 2200);
+      } catch (e) {
+        const range = document.createRange();
+        range.selectNodeContents(_promptEl);
+        const sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(range);
+        _copyBtn.textContent = '⚠ Selecciona y Ctrl+C';
+        setTimeout(() => { _copyBtn.textContent = 'Copiar prompt'; }, 3000);
+      }
+    });
+  }
 
   // ═══ Sidebar anchor scrolling ═══
   // Como .main tiene overflow-y:auto, las hash-links no scrollean solas.
