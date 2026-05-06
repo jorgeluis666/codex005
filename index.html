@@ -272,6 +272,54 @@
 
   section[id] { scroll-margin-top: 16px; }
 
+  /* ═══ Paginación ═══ */
+  .pagination {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 0 4px;
+    flex-wrap: wrap;
+  }
+  .pagination:empty { display: none; }
+  .pg-btn {
+    padding: 5px 11px;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: var(--r-sm);
+    font-family: inherit;
+    font-size: 12px; font-weight: 500;
+    color: var(--text-2);
+    cursor: pointer;
+    min-width: 32px;
+  }
+  .pg-btn:hover:not(:disabled) { background: #F1F5F9; }
+  .pg-btn:disabled { opacity: .35; cursor: not-allowed; }
+  .pg-btn.on {
+    background: var(--brand);
+    color: #fff;
+    border-color: var(--brand);
+  }
+  .pg-info {
+    font-size: 11px;
+    color: var(--muted);
+    margin: 0 8px;
+  }
+
+  /* ═══ Pill de plataforma en matriz de decisiones ═══ */
+  .matrix-card .matrix-plat {
+    font-size: 9px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .07em;
+    padding: 2px 7px;
+    border-radius: 20px;
+    display: inline-block;
+    margin-bottom: 6px;
+  }
+  .matrix-plat.tt { background: #F1F5F9; color: #0F172A; }
+  .matrix-plat.ig { background: var(--purple-soft); color: var(--purple-text); }
+
   /* ═══ Recomendaciones de reels ═══ */
   .rec-grid {
     display: grid;
@@ -979,7 +1027,6 @@
 
     <div class="s-group-lbl">Diagnóstico</div>
     <a href="#por-canal"         class="s-item">Por canal · IG vs TikTok</a>
-    <a href="#vista-comparativa" class="s-item">Vista comparativa</a>
     <a href="#top"               class="s-item">Top contenido</a>
     <a href="#temas-ganchos"     class="s-item">Temas y ganchos</a>
     <a href="#decisiones"        class="s-item">Decisiones estratégicas</a>
@@ -987,12 +1034,6 @@
     <a href="#recomendaciones"   class="s-item">Recomendaciones</a>
     <a href="#hallazgos"         class="s-item">Hallazgos clave</a>
 
-    <div class="s-group-lbl" style="margin-top:14px">Propuesta</div>
-    <a href="#supuestos"  class="s-item">Supuestos de venta</a>
-    <a href="#ejes"       class="s-item">Ejes temáticos</a>
-    <a href="#mix"        class="s-item">Mix por plataforma</a>
-    <a href="#calendario" class="s-item">Calendario semanal</a>
-    <a href="#acciones"   class="s-item">Acciones · 30 días</a>
 
     <hr class="s-div" />
 
@@ -1072,37 +1113,6 @@
         </div>
       </section>
 
-      <!-- ═══════ VISTA COMPARATIVA ═══════ -->
-      <section id="vista-comparativa">
-        <div class="sec-lbl">Vista comparativa · plataformas y matriz</div>
-        <div class="kpi-grid-2">
-
-          <div class="chart-panel">
-            <div class="panel-head">
-              <div>
-                <div class="panel-title">Rendimiento por plataforma</div>
-                <div class="panel-sub">Alcance vs nuevos seguidores en el periodo</div>
-              </div>
-            </div>
-            <div class="chart-canvas-wrap"><div id="chartPlatform" class="chart-svg-host"></div></div>
-          </div>
-
-          <div class="chart-panel">
-            <div class="panel-head">
-              <div>
-                <div class="panel-title">Matriz de alcance e interacción</div>
-                <div class="panel-sub">Cada punto = un post · X = visualizaciones · Y = engagement %</div>
-              </div>
-            </div>
-            <div class="chart-canvas-wrap"><div id="chartMatrix" class="chart-svg-host"></div></div>
-            <div class="chart-legend">
-              <b>Buena interacción + bajo alcance</b>: mejorar ganchos. <b>Alto alcance + alta interacción</b>: repetir contenido. <b>Alto alcance + baja interacción</b>: mejorar mensaje. <b>Bajo alcance + baja interacción</b>: detener o pivotar.
-            </div>
-          </div>
-
-        </div>
-      </section>
-
       <!-- ═══════ 2 · TOP CONTENIDO ═══════ -->
       <section id="top">
         <div class="sec-lbl">2 · Top contenido del periodo</div>
@@ -1114,7 +1124,15 @@
             </div>
           </div>
 
-          <!-- Barra de filtros: solo afecta esta tabla y su contador -->
+          <!-- Filtro por red social -->
+          <div class="filter-bar" id="filterNetwork">
+            <span class="f-lbl">Red social</span>
+            <button class="f-btn on" data-net="all">Todo</button>
+            <button class="f-btn"     data-net="tiktok">TikTok</button>
+            <button class="f-btn"     data-net="instagram">Instagram</button>
+          </div>
+
+          <!-- Filtro por periodo -->
           <div class="filter-bar" id="filterBar">
             <span class="f-lbl">Periodo</span>
             <button class="f-btn on" data-filter="all">Todo (Ene-Abr)</button>
@@ -1143,6 +1161,7 @@
               </tbody>
             </table>
           </div>
+          <div class="pagination" id="topPagination"></div>
           <div class="insight info" style="margin-top:14px">
             <b>Patrón claro.</b> Los top performers en TikTok comparten estructura: emoji + pregunta-dolor en el hook · explicación corta · servicio. Duración 15-20s. Los temas que resuenan: <b>medición · objetivo de campaña · costo · primer paso</b>. Replicar esa fórmula como template.
           </div>
@@ -1152,6 +1171,14 @@
       <!-- ═══════ TEMAS Y GANCHOS ═══════ -->
       <section id="temas-ganchos">
         <div class="sec-lbl">Análisis por tema y hook</div>
+
+        <div class="filter-bar" id="filterNetworkTG" style="margin-bottom:14px;">
+          <span class="f-lbl">Red social</span>
+          <button class="f-btn on" data-net="all">Todo</button>
+          <button class="f-btn"     data-net="tiktok">TikTok</button>
+          <button class="f-btn"     data-net="instagram">Instagram</button>
+        </div>
+
         <div class="kpi-grid-2">
 
           <div class="chart-panel">
@@ -1277,148 +1304,6 @@
         </div>
       </section>
 
-      <!-- ═══════ 4 · SUPUESTOS DE VENTA ═══════ -->
-      <section id="supuestos">
-        <div class="sec-lbl">4 · Supuestos sobre objetivos de venta</div>
-        <div class="panel">
-          <div class="panel-head">
-            <div>
-              <div class="panel-title">Lo que estoy asumiendo · ajusta si es distinto</div>
-              <div class="panel-sub">No me diste metas explícitas; estos son inferencias del contenido publicado.</div>
-            </div>
-            <span class="pill amber">Pendiente confirmar</span>
-          </div>
-          <ol class="action-list">
-            <li>Generar leads B2B SMB en Perú para servicios de pauta digital — <b>Meta Ads, Google Ads, TikTok Ads</b>.</li>
-            <li>Vender el <b>curso avanzado de Meta Ads</b> y capacitaciones similares.</li>
-            <li>Cerrar setups de <b>Shopify e-commerce</b> conectados a Meta Ads.</li>
-            <li>Posicionar a Lima Retail como <b>autoridad en performance marketing</b> en Lima/Perú.</li>
-            <li>Captar PyMEs locales que <b>prueban TikTok Ads por primera vez</b> — un nicho con poca competencia educadora.</li>
-          </ol>
-          <div class="insight warn" style="margin-top:14px">
-            <b>Para afinar el plan</b>, dime: meta de leads/mes en Q2, mix por servicio (¿qué % a Meta Ads vs Shopify vs curso?), y ticket promedio. Con esos números ajusto el calendario y los CTAs.
-          </div>
-        </div>
-      </section>
-
-      <!-- ═══════ 5 · EJES TEMÁTICOS ═══════ -->
-      <section id="ejes">
-        <div class="sec-lbl">5 · Ejes temáticos del plan</div>
-        <div class="axis-grid">
-          <div class="axis-card ax-blue">
-            <div class="axis-num">Eje 1 · Pilar</div>
-            <div class="axis-title">Educativo de plataformas</div>
-            <div class="axis-meta">Meta Ads, Google Ads, TikTok Ads, Shopify. Formato dolor → solución → servicio. Es lo que ya está convirtiendo en TikTok.</div>
-            <div class="axis-share">60% del calendario</div>
-          </div>
-          <div class="axis-card ax-amber">
-            <div class="axis-num">Eje 2 · Diferenciador</div>
-            <div class="axis-title">Resultados, casos y números</div>
-            <div class="axis-meta">Comparativas (S/X invertido → S/Y vendido), antes vs después, métricas reales de campañas. Refuerza autoridad y aleja al contenido genérico.</div>
-            <div class="axis-share">25% del calendario</div>
-          </div>
-          <div class="axis-card ax-green">
-            <div class="axis-num">Eje 3 · Conversión</div>
-            <div class="axis-title">Servicio y producto concreto</div>
-            <div class="axis-meta">Curso Meta Ads, auditoría gratuita, setup Shopify, leads por WhatsApp. CTA directo a venta o agendamiento.</div>
-            <div class="axis-share">15% del calendario</div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ═══════ 6 · MIX POR PLATAFORMA ═══════ -->
-      <section id="mix">
-        <div class="sec-lbl">6 · Mix por plataforma</div>
-        <div class="kpi-grid-2">
-          <div class="panel" style="border-top: 3px solid var(--green);">
-            <div class="panel-head">
-              <div>
-                <div class="panel-title">TikTok · canal principal</div>
-                <div class="panel-sub">Doblar la apuesta donde ya hay tracción</div>
-              </div>
-              <span class="pill green">Core</span>
-            </div>
-            <ul style="margin: 0; padding-left: 18px; line-height: 1.8; font-size: 13px; color: var(--text-2);">
-              <li><b>4 reels/semana</b> (~16/mes vs 38 actuales — bajar volumen, subir calidad).</li>
-              <li><b>Duración 15-20s</b>, hook en los primeros 3 segundos.</li>
-              <li>Texto en pantalla siempre — replicar copy del top performer.</li>
-              <li>CTA al final: visitar bio, mensaje directo, WhatsApp.</li>
-              <li>Hashtags probados: #marketingdigital · #metaads · #googleads.</li>
-              <li>Probar 2 reels/mes de <b>30-60s</b> con casos reales — diferenciador.</li>
-            </ul>
-          </div>
-
-          <div class="panel" style="border-top: 3px solid var(--amber);">
-            <div class="panel-head">
-              <div>
-                <div class="panel-title">Instagram · canal de soporte</div>
-                <div class="panel-sub">Bajar volumen, subir calidad. Re-publicar de TikTok.</div>
-              </div>
-              <span class="pill amber">Replantear</span>
-            </div>
-            <ul style="margin: 0; padding-left: 18px; line-height: 1.8; font-size: 13px; color: var(--text-2);">
-              <li><b>Bajar de 190 a ~30 posts en Q2</b> (10/mes).</li>
-              <li>1 carrusel educativo / semana (mismo eje que TikTok).</li>
-              <li>1 reel / semana: re-publicar el de TikTok adaptado.</li>
-              <li><b>Stories</b>: máx 3-5 por día, todas con CTA explícito (encuesta, link, mensaje). Eliminar publicación automática sin objetivo.</li>
-              <li>Aprovechar 70% Lima → mensajería local: "PyMEs limeñas", referencias a distritos, casos del Perú.</li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      <!-- ═══════ 7 · CALENDARIO ═══════ -->
-      <section id="calendario">
-        <div class="sec-lbl">7 · Calendario · semana tipo</div>
-        <div class="panel">
-          <div class="panel-head">
-            <div>
-              <div class="panel-title">Distribución semanal sugerida</div>
-              <div class="panel-sub">Patrón replicable las 12 semanas del Q2 con rotación de ejes</div>
-            </div>
-          </div>
-          <div class="table-wrap">
-            <table>
-              <thead>
-                <tr><th>Día</th><th>TikTok</th><th>Instagram (feed)</th><th>Stories</th><th>Eje</th></tr>
-              </thead>
-              <tbody>
-                <tr><td class="cal-day">Lunes</td><td>Reel educativo (Meta Ads)</td><td class="cal-empty">—</td><td>Recap viernes / pregunta</td><td><span class="pill blue">Educativo</span></td></tr>
-                <tr><td class="cal-day">Martes</td><td class="cal-empty">—</td><td>Carrusel educativo (Google Ads)</td><td class="cal-empty">—</td><td><span class="pill blue">Educativo</span></td></tr>
-                <tr><td class="cal-day">Miércoles</td><td>Reel comparativa / caso</td><td class="cal-empty">—</td><td>CTA mensaje directo</td><td><span class="pill amber">Resultados</span></td></tr>
-                <tr><td class="cal-day">Jueves</td><td class="cal-empty">—</td><td>Reel (re-publicar de miércoles)</td><td>Pregunta + sticker</td><td><span class="pill amber">Resultados</span></td></tr>
-                <tr><td class="cal-day">Viernes</td><td>Reel CTA producto/servicio</td><td>Story con link a auditoría</td><td>Link a curso / WhatsApp</td><td><span class="pill green">Conversión</span></td></tr>
-                <tr><td class="cal-day">Sábado</td><td class="cal-empty">—</td><td class="cal-empty">—</td><td>Behind-the-scenes / equipo</td><td><span class="pill gray">Comunidad</span></td></tr>
-                <tr><td class="cal-day">Domingo</td><td class="cal-empty">— descanso —</td><td class="cal-empty">— descanso —</td><td class="cal-empty">— descanso —</td><td class="cal-empty">—</td></tr>
-              </tbody>
-            </table>
-          </div>
-          <div class="insight info" style="margin-top:14px">
-            <b>Volumen mensual.</b> ≈16 reels TikTok · 4 carruseles IG · 4 reels IG (re-uso) · ≈75 stories con CTA. Total: <b>≈100 piezas/mes vs ~250/mes actuales</b>. Menos publicación, más estratégica.
-          </div>
-        </div>
-      </section>
-
-      <!-- ═══════ 8 · ACCIONES 30 DÍAS ═══════ -->
-      <section id="acciones">
-        <div class="sec-lbl">8 · Acciones · primeros 30 días</div>
-        <div class="panel">
-          <ol class="action-list">
-            <li><b>Reducir frecuencia en Instagram</b> a 8-10 piezas/mes y reasignar el tiempo a producción TikTok (4 reels/semana).</li>
-            <li><b>Replantear Stories</b>: cada set debe tener CTA. Apagar publicaciones automáticas sin engagement.</li>
-            <li><b>Producir 5 reels de estrategia</b> con el prompt ya guardado en <code>prompts/reels_estrategia.txt</code>.</li>
-            <li><b>Documentar template ganador</b>: hook con emoji + pregunta-dolor → explicación 8-10s → CTA. Reutilizar en cada pieza.</li>
-            <li><b>Probar formato largo</b>: 2 reels/mes de 30-60s con caso real anonimizado.</li>
-            <li><b>Definir metas Q2</b>: leads/mes, mix por servicio, ticket promedio. Sin esos números el plan se queda en directrices.</li>
-            <li><b>Refrescar datos cada 2 semanas</b>: exportar el PDF desde Metricool y pasarlo al asistente para regenerar las métricas y volver a clasificar el contenido.</li>
-          </ol>
-        </div>
-
-        <div class="insight info">
-          <b>Siguiente paso.</b> Cuando tengas un nuevo reporte de Metricool, exportá el PDF y pasámelo en el chat — actualizo el bloque <code>METRICS</code>, regenero la clasificación de contenido (temas, ganchos, decisiones) y dejamos lista una versión nueva para revisar antes de pushear a <code>jorgeluis666/codex005</code>.
-        </div>
-      </section>
-
     </div>
   </main>
 </div>
@@ -1521,39 +1406,50 @@
       : `${ttA.top_country_pct || '—'}% ${ttA.top_country || ''}`;
   }
 
-  // ═══ Top posts table + filtro de tiempo ═══
-  let currentFilter = 'all';
+  // ═══ Top posts: filtros (red social + periodo) + paginación ═══
+  let currentDateFilter = 'all';
+  let currentNetFilter = 'all';
+  let currentPage = 1;
+  const POSTS_PER_PAGE = 10;
 
-  function filterPosts(posts, filter) {
+  function isTikTok(p) { return (p.platform || '').startsWith('tiktok'); }
+
+  function applyFilters(posts) {
     if (!Array.isArray(posts)) return [];
-    if (filter === 'all') return posts.slice();
-    if (filter === 'last30') {
+    let result = posts.slice();
+    // Filtro red social
+    if (currentNetFilter === 'tiktok')         result = result.filter(isTikTok);
+    else if (currentNetFilter === 'instagram') result = result.filter(p => !isTikTok(p));
+    // Filtro periodo
+    if (currentDateFilter === 'last30') {
       const end = new Date(M.meta.to);
       const start = new Date(end);
       start.setDate(start.getDate() - 30);
-      return posts.filter(p => {
+      result = result.filter(p => {
         if (!p.date) return false;
         const d = new Date(p.date);
         return d >= start && d <= end;
       });
+    } else if (currentDateFilter !== 'all') {
+      result = result.filter(p => (p.date || '').startsWith(currentDateFilter));
     }
-    // YYYY-MM (mes)
-    return posts.filter(p => (p.date || '').startsWith(filter));
+    return result;
   }
 
-  function renderTopPosts(posts) {
+  function renderTopPosts(allFiltered, page) {
     const tbody = $('#top-posts-body');
     if (!tbody) return;
-    if (!posts.length) {
-      tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; color: var(--muted); padding: 30px;">Sin contenido en este rango</td></tr>';
+    if (!allFiltered.length) {
+      tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; color: var(--muted); padding: 30px;">Sin contenido para los filtros aplicados</td></tr>';
       return;
     }
-    // Ordenar por likes desc, luego engagement desc
-    const sorted = posts.slice().sort((a, b) =>
+    const sorted = allFiltered.slice().sort((a, b) =>
       (b.likes || 0) - (a.likes || 0) || (b.engagement || 0) - (a.engagement || 0)
     );
-    tbody.innerHTML = sorted.map(p => {
-      const isTT = (p.platform || '').startsWith('tiktok');
+    const start = (page - 1) * POSTS_PER_PAGE;
+    const slice = sorted.slice(start, start + POSTS_PER_PAGE);
+    tbody.innerHTML = slice.map(p => {
+      const isTT = isTikTok(p);
       const cls  = isTT ? 'tc-platform-tt' : 'tc-platform-ig';
       const lbl  = (p.platform || '').replace('-', ' · ').replace('instagram','IG').replace('tiktok','TikTok');
       return `<tr>
@@ -1567,13 +1463,34 @@
     }).join('');
   }
 
+  function renderPagination(total) {
+    const el = $('#topPagination');
+    if (!el) return;
+    const pages = Math.ceil(total / POSTS_PER_PAGE);
+    if (pages <= 1) { el.innerHTML = ''; return; }
+    let html = `<button class="pg-btn" data-page="prev" ${currentPage === 1 ? 'disabled' : ''}>‹</button>`;
+    for (let i = 1; i <= pages; i++) {
+      html += `<button class="pg-btn ${i === currentPage ? 'on' : ''}" data-page="${i}">${i}</button>`;
+    }
+    html += `<button class="pg-btn" data-page="next" ${currentPage === pages ? 'disabled' : ''}>›</button>`;
+    html += `<span class="pg-info">${(currentPage - 1) * POSTS_PER_PAGE + 1}-${Math.min(currentPage * POSTS_PER_PAGE, total)} de ${total}</span>`;
+    el.innerHTML = html;
+    el.querySelectorAll('.pg-btn').forEach(b => {
+      b.addEventListener('click', () => {
+        const v = b.dataset.page;
+        const pgs = Math.ceil(total / POSTS_PER_PAGE);
+        if (v === 'prev') currentPage = Math.max(1, currentPage - 1);
+        else if (v === 'next') currentPage = Math.min(pgs, currentPage + 1);
+        else currentPage = parseInt(v, 10);
+        applyAndRender();
+      });
+    });
+  }
+
   function renderFilterSummary(posts) {
     const el = $('#filterSummary');
     if (!el) return;
-    if (!posts.length) {
-      el.innerHTML = '<b>0</b> posts';
-      return;
-    }
+    if (!posts.length) { el.innerHTML = '<b>0</b> posts'; return; }
     const totalViews = posts.reduce((s, p) => s + (p.views || 0), 0);
     const totalLikes = posts.reduce((s, p) => s + (p.likes || 0), 0);
     el.innerHTML =
@@ -1582,23 +1499,36 @@
       `<b>${totalLikes}</b> likes`;
   }
 
-  function applyFilter() {
-    const filtered = filterPosts(M.top_posts, currentFilter);
-    renderTopPosts(filtered);
+  function applyAndRender() {
+    const filtered = applyFilters(M.top_posts);
+    renderTopPosts(filtered, currentPage);
     renderFilterSummary(filtered);
+    renderPagination(filtered.length);
   }
 
-  // Wiring de los botones
+  // Wiring filtro periodo
   $$('#filterBar .f-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       $$('#filterBar .f-btn').forEach(x => x.classList.remove('on'));
       btn.classList.add('on');
-      currentFilter = btn.dataset.filter;
-      applyFilter();
+      currentDateFilter = btn.dataset.filter;
+      currentPage = 1;
+      applyAndRender();
     });
   });
 
-  applyFilter();
+  // Wiring filtro red social
+  $$('#filterNetwork .f-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      $$('#filterNetwork .f-btn').forEach(x => x.classList.remove('on'));
+      btn.classList.add('on');
+      currentNetFilter = btn.dataset.net;
+      currentPage = 1;
+      applyAndRender();
+    });
+  });
+
+  applyAndRender();
 
   // ═══ Charts + clasificación de contenido ═══
   const PALETTE = {
@@ -1775,69 +1705,74 @@
     if (!M || !Array.isArray(M.top_posts)) return;
     const posts = M.top_posts;
 
-    // 1. Rendimiento por plataforma
-    const igAlcance = M.instagram.impressions || 0;
-    const ttAlcance = M.tiktok.views || 0;
-    const igGain = Math.round((M.instagram.followers || 0) * (M.instagram.followers_change_pct || 0) / 100);
-    const ttGain = Math.round((M.tiktok.followers   || 0) * (M.tiktok.followers_change_pct   || 0) / 100);
-    svgBarChart($('#chartPlatform'), {
-      labels: ['TikTok', 'Instagram'],
-      datasets: [
-        { label: 'Alcance', data: [ttAlcance, igAlcance], color: PALETTE.tt },
-        { label: 'Seguidores ganados', data: [ttGain, igGain], color: PALETTE.purple }
-      ]
-    });
-
-    // 2. Matriz alcance vs engagement
-    const ttPosts = posts.filter(p => (p.platform || '').startsWith('tiktok') && p.engagement != null);
-    const igPosts = posts.filter(p => !(p.platform || '').startsWith('tiktok') && p.engagement != null);
-    svgScatter($('#chartMatrix'), {
-      xLabel: 'Visualizaciones',
-      yLabel: 'Engagement %',
-      datasets: [
-        { label: 'TikTok',    color: PALETTE.tt, data: ttPosts.map(p => ({ x: p.views || 0, y: p.engagement || 0, t: p.text })) },
-        { label: 'Instagram', color: PALETTE.ig, data: igPosts.map(p => ({ x: p.views || 0, y: p.engagement || 0, t: p.text })) }
-      ]
-    });
-
-    // 3. Mejores temas por alcance
-    const byTopic = {};
-    posts.forEach(p => {
-      const t = classifyTopic(p.text);
-      if (t === 'Sin texto') return;
-      byTopic[t] = (byTopic[t] || 0) + (p.views || 0);
-    });
-    const topicEntries = Object.entries(byTopic).sort((a, b) => b[1] - a[1]).slice(0, 8);
-    svgBarChart($('#chartTopics'), {
-      labels: topicEntries.map(e => e[0]),
-      datasets: [{ label: '', data: topicEntries.map(e => e[1]), color: PALETTE.tt }],
-      rotateLabels: true,
-      showLegend: false
-    });
-
-    // 4. Mejores ganchos
-    const ranked = posts
-      .filter(p => p.engagement != null && p.engagement > 0 && p.text && !p.text.includes('sin texto'))
-      .sort((a, b) => b.engagement - a.engagement)
-      .slice(0, 5);
-    const rankList = $('#rankList');
-    if (rankList) {
-      rankList.innerHTML = ranked.map((p, i) => {
-        const topic = classifyTopic(p.text);
-        const plat = platformLabel(p.platform);
-        const engClass = p.engagement >= 5 ? 'green' : p.engagement >= 2.5 ? 'amber' : 'red';
-        const platClass = plat === 'TikTok' ? 'gray' : 'purple';
-        return `<div class="rank-item">
-          <span class="rank-num">#${i + 1}</span>
-          <div class="rank-title">${escapeHtml(p.text.replace(/^[\s\W]+/, '').slice(0, 110))}</div>
-          <div class="rank-tags">
-            <span class="pill ${platClass}">${plat}</span>
-            <span class="pill blue">${escapeHtml(topic)}</span>
-            <span class="pill ${engClass}">${p.engagement.toFixed(1)}%</span>
-          </div>
-        </div>`;
-      }).join('');
+    // 3 + 4. Mejores temas y ganchos (filtrable por red social)
+    let currentNetTG = 'all';
+    function postsByNet(arr, net) {
+      if (net === 'all') return arr;
+      return arr.filter(p => {
+        const isTT = (p.platform || '').startsWith('tiktok');
+        return net === 'tiktok' ? isTT : !isTT;
+      });
     }
+
+    function renderTopicsAndHooks() {
+      const subset = postsByNet(posts, currentNetTG);
+
+      // Mejores temas
+      const byTopic = {};
+      subset.forEach(p => {
+        const t = classifyTopic(p.text);
+        if (t === 'Sin texto') return;
+        byTopic[t] = (byTopic[t] || 0) + (p.views || 0);
+      });
+      const topicEntries = Object.entries(byTopic).sort((a, b) => b[1] - a[1]).slice(0, 8);
+      const chartColor = currentNetTG === 'instagram' ? PALETTE.ig : PALETTE.tt;
+      svgBarChart($('#chartTopics'), {
+        labels: topicEntries.length ? topicEntries.map(e => e[0]) : ['Sin datos'],
+        datasets: [{ label: '', data: topicEntries.length ? topicEntries.map(e => e[1]) : [0], color: chartColor }],
+        rotateLabels: true,
+        showLegend: false
+      });
+
+      // Mejores ganchos
+      const ranked = subset
+        .filter(p => p.engagement != null && p.engagement > 0 && p.text && !p.text.includes('sin texto'))
+        .sort((a, b) => b.engagement - a.engagement)
+        .slice(0, 5);
+      const rankList = $('#rankList');
+      if (rankList) {
+        if (!ranked.length) {
+          rankList.innerHTML = '<div style="text-align:center;color:var(--muted);padding:30px;font-size:12px;">Sin posts con engagement en esta red social</div>';
+        } else {
+          rankList.innerHTML = ranked.map((p, i) => {
+            const topic = classifyTopic(p.text);
+            const plat = platformLabel(p.platform);
+            const engClass = p.engagement >= 5 ? 'green' : p.engagement >= 2.5 ? 'amber' : 'red';
+            const platClass = plat === 'TikTok' ? 'gray' : 'purple';
+            return `<div class="rank-item">
+              <span class="rank-num">#${i + 1}</span>
+              <div class="rank-title">${escapeHtml(p.text.replace(/^[\s\W]+/, '').slice(0, 110))}</div>
+              <div class="rank-tags">
+                <span class="pill ${platClass}">${plat}</span>
+                <span class="pill blue">${escapeHtml(topic)}</span>
+                <span class="pill ${engClass}">${p.engagement.toFixed(1)}%</span>
+              </div>
+            </div>`;
+          }).join('');
+        }
+      }
+    }
+    renderTopicsAndHooks();
+
+    // Wiring del filtro de red social en Temas y ganchos
+    $$('#filterNetworkTG .f-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        $$('#filterNetworkTG .f-btn').forEach(x => x.classList.remove('on'));
+        btn.classList.add('on');
+        currentNetTG = btn.dataset.net;
+        renderTopicsAndHooks();
+      });
+    });
 
     // 5. Decisiones estrategicas (cuadrantes)
     const viewsList = posts.map(p => p.views || 0).filter(v => v > 0);
@@ -1870,7 +1805,11 @@
         const card = document.createElement('div');
         card.className = 'matrix-card';
         const title = (p.text || '').replace(/^[\s\W]+/, '').slice(0, 90);
+        const isTT = (p.platform || '').startsWith('tiktok');
+        const platClass = isTT ? 'tt' : 'ig';
+        const platLabel = isTT ? 'TikTok' : 'Instagram';
         card.innerHTML = `
+          <span class="matrix-plat ${platClass}">${platLabel}</span>
           <div class="matrix-title">${escapeHtml(title)}</div>
           <div class="matrix-desc">${QUAD_ADVICE[q]}</div>
         `;
