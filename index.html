@@ -200,9 +200,17 @@
   .sec-lbl {
     font-size: 10px; font-weight: 600; letter-spacing: .08em;
     text-transform: uppercase; color: var(--muted);
-    border-bottom: 1px solid var(--border);
-    padding-bottom: 8px; margin-bottom: 4px;
+    margin-bottom: 6px;
   }
+  .sec-desc {
+    font-size: 13px;
+    color: var(--text-2);
+    line-height: 1.55;
+    margin: 0 0 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .sec-desc b { color: var(--text); font-weight: 600; }
 
   /* ═══ Específico de esta página ═══ */
   .ch-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
@@ -1154,12 +1162,14 @@
 
     <div class="s-group-lbl">Diagnóstico</div>
     <a href="#por-canal"         class="s-item">Por canal · IG vs TikTok</a>
+    <a href="#hallazgos"         class="s-item">Hallazgos clave</a>
     <a href="#top"               class="s-item">Top contenido</a>
     <a href="#temas-ganchos"     class="s-item">Temas y ganchos</a>
+
+    <div class="s-group-lbl" style="margin-top:14px">Acción</div>
     <a href="#decisiones"        class="s-item">Decisiones estratégicas</a>
     <a href="#formato"           class="s-item">Formato del reel</a>
     <a href="#recomendaciones"   class="s-item">Recomendaciones</a>
-    <a href="#hallazgos"         class="s-item">Hallazgos clave</a>
 
 
     <hr class="s-div" />
@@ -1196,9 +1206,10 @@
 
     <div class="content">
 
-      <!-- ═══════ 1 · POR CANAL ═══════ -->
+      <!-- ═══════ POR CANAL ═══════ -->
       <section id="por-canal">
-        <div class="sec-lbl">1 · Diagnóstico por canal</div>
+        <div class="sec-lbl">Diagnóstico por canal</div>
+        <div class="sec-desc">Estado de cada canal al cierre del periodo. La caída es Instagram; el motor del crecimiento es TikTok.</div>
         <div class="ch-grid">
 
           <!-- Instagram -->
@@ -1243,14 +1254,38 @@
         </div>
       </section>
 
-      <!-- ═══════ 2 · TOP CONTENIDO ═══════ -->
+      <!-- ═══════ HALLAZGOS ═══════ -->
+      <section id="hallazgos">
+        <div class="sec-lbl">Hallazgos clave</div>
+        <div class="sec-desc">Lo que el reporte revela en una mirada — leer antes de tomar decisiones tácticas.</div>
+        <div class="panel">
+          <div class="insight ok">
+            <b>TikTok es el motor del crecimiento.</b> Interacciones, visualizaciones, alcance/post y publicaciones todas en verde. Es el único canal con todas las métricas creciendo. El Q2 debe doblar la apuesta aquí.
+          </div>
+          <div class="insight warn">
+            <b>Instagram está sobrepublicando sin retorno.</b> Mucho volumen de posts y muy pocas interacciones. La caída de impresiones y de alcance por reel sugiere fatiga de audiencia y/o señales de calidad bajas. Bajar volumen, subir calidad.
+          </div>
+          <div class="insight err">
+            <b>Las Stories están muertas.</b> Cero respuestas en todo el periodo y caída fuerte de impresiones. Son ruido para la audiencia. Replanteo total: máximo 3-5 stories/día con CTA explícito.
+          </div>
+          <div class="insight info">
+            <b>La audiencia es local.</b> 85% Perú · 70% Lima en IG. El mensaje, los referentes y los precios deben hablar a la PyME limeña. TikTok abre algo de regional (Bolivia, México, Chile) — útil para escalar el curso o servicios remotos.
+          </div>
+          <div class="insight info">
+            <b>El contenido educativo de plataformas Ads es lo que convierte.</b> Meta Ads, Google Ads, Shopify dominan el top. Los reels sin texto/copy ("- Go") ganan impresiones pero cero engagement — son views vacíos. Cada pieza necesita copy con dolor + servicio.
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════ TOP CONTENIDO ═══════ -->
       <section id="top">
-        <div class="sec-lbl">2 · Top contenido del periodo</div>
+        <div class="sec-lbl">Top contenido del periodo</div>
+        <div class="sec-desc">Qué piezas funcionaron — filtra por <b>red social</b> y <b>mes</b> para encontrar patrones replicables.</div>
         <div class="panel">
           <div class="panel-head">
             <div>
               <div class="panel-title">Posts con mejor engagement</div>
-              <div class="panel-sub">El patrón ganador: hook con dolor + emoji · 15-20s · Meta/Google Ads</div>
+              <div class="panel-sub">El patrón ganador: emoji + pregunta-dolor · 15-20s · Meta/Google Ads</div>
             </div>
           </div>
 
@@ -1301,6 +1336,7 @@
       <!-- ═══════ TEMAS Y GANCHOS ═══════ -->
       <section id="temas-ganchos">
         <div class="sec-lbl">Análisis por tema y hook</div>
+        <div class="sec-desc">Qué temas concentran el alcance y qué ganchos disparan engagement, separados por red social.</div>
 
         <div class="filter-bar" id="filterNetworkTG" style="margin-bottom:14px;">
           <span class="f-lbl">Red social</span>
@@ -1337,11 +1373,12 @@
       <!-- ═══════ DECISIONES ESTRATÉGICAS ═══════ -->
       <section id="decisiones">
         <div class="sec-lbl">Decisiones estratégicas</div>
+        <div class="sec-desc">Qué hacer con cada post según dónde cae en la matriz <b>alcance × engagement</b>: repetir, ajustar gancho, ajustar mensaje, o detener.</div>
         <div class="panel">
           <div class="panel-head">
             <div>
-              <div class="panel-title">Qué hacer con cada tipo de contenido</div>
-              <div class="panel-sub">Clasificación por cuadrante (alcance × engagement) sobre la mediana del periodo</div>
+              <div class="panel-title">Clasificación por cuadrante</div>
+              <div class="panel-sub">Cada post evaluado contra la mediana del periodo · top 6 visibles por cuadrante</div>
             </div>
           </div>
           <div class="matrix-grid" id="matrixGrid">
@@ -1364,6 +1401,7 @@
       <!-- ═══════ FORMATO Y ANATOMIA DEL REEL ═══════ -->
       <section id="formato">
         <div class="sec-lbl">Formato y anatomía del reel ganador</div>
+        <div class="sec-desc">Template a replicar en cada nueva pieza: duración, franja horaria, apertura y estructura del top performer.</div>
 
         <div class="kpi-grid" id="formatStats">
           <!-- 4 KPI cards rendered by JS -->
@@ -1403,34 +1441,13 @@
 
       <!-- ═══════ RECOMENDACIONES DE NUEVOS REELS ═══════ -->
       <section id="recomendaciones">
-        <div class="sec-lbl">Recomendaciones de nuevos reels · qué grabar después</div>
+        <div class="sec-lbl">Recomendaciones de nuevos reels</div>
+        <div class="sec-desc">10 ideas concretas para producir esta semana — cada tarjeta cita el post que la sustenta.</div>
         <div class="rec-grid" id="recGrid">
           <!-- Cards rendered by JS -->
         </div>
         <div class="insight info" style="margin-top: 14px">
           <b>Cómo leer estas recomendaciones.</b> Cada tarjeta toma un patrón observado en el reporte (top performer, eje sub-explotado, tema con tracción) y lo convierte en un reel concreto a producir. Prioridad <b>alta</b> = tiene evidencia directa de que ya funciona o es la oportunidad más clara. <b>Media</b> = es replanteo de algo que está cerca pero no convierte.
-        </div>
-      </section>
-
-      <!-- ═══════ 3 · HALLAZGOS ═══════ -->
-      <section id="hallazgos">
-        <div class="sec-lbl">3 · Hallazgos clave</div>
-        <div class="panel">
-          <div class="insight ok">
-            <b>TikTok es el motor del crecimiento.</b> Interacciones, visualizaciones, alcance/post y publicaciones todas en verde. Es el único canal con todas las métricas creciendo. El Q2 debe doblar la apuesta aquí.
-          </div>
-          <div class="insight warn">
-            <b>Instagram está sobrepublicando sin retorno.</b> Mucho volumen de posts y muy pocas interacciones. La caída de impresiones y de alcance por reel sugiere fatiga de audiencia y/o señales de calidad bajas. Bajar volumen, subir calidad.
-          </div>
-          <div class="insight err">
-            <b>Las Stories están muertas.</b> Cero respuestas en todo el periodo y caída fuerte de impresiones. Son ruido para la audiencia. Replanteo total: máximo 3-5 stories/día con CTA explícito.
-          </div>
-          <div class="insight info">
-            <b>La audiencia es local.</b> 85% Perú · 70% Lima en IG. El mensaje, los referentes y los precios deben hablar a la PyME limeña. TikTok abre algo de regional (Bolivia, México, Chile) — útil para escalar el curso o servicios remotos.
-          </div>
-          <div class="insight info">
-            <b>El contenido educativo de plataformas Ads es lo que convierte.</b> Meta Ads, Google Ads, Shopify dominan el top. Los reels sin texto/copy ("- Go") ganan impresiones pero cero engagement — son views vacíos. Cada pieza necesita copy con dolor + servicio.
-          </div>
         </div>
       </section>
 
