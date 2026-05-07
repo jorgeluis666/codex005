@@ -59,32 +59,31 @@
     display: flex;
     flex-direction: column;
     position: sticky;
-    top: 0;
-    max-height: 100vh;
+    top: 49px;
+    max-height: calc(100vh - 49px);
     overflow-y: auto;
+    border-right: 1px solid var(--border);
   }
-  .s-brand { padding: 20px 20px 18px; border-bottom: 1px solid rgba(255,255,255,.06); margin-bottom: 10px; }
-  .s-title { font-size: 15px; font-weight: 600; color: #fff; letter-spacing: -.01em; }
-  .s-sub   { font-size: 12px; color: #64748B; margin-top: 2px; }
   .s-group-lbl {
-    font-size: 10px; text-transform: uppercase; color: var(--sidebar-muted);
-    letter-spacing: .08em; padding: 10px 22px 6px; font-weight: 600;
+    font-size: 10px; text-transform: uppercase; color: var(--muted);
+    letter-spacing: .08em; padding: 18px 22px 8px; font-weight: 600;
   }
+  .s-group-lbl:first-of-type { padding-top: 22px; }
   .s-item {
     display: flex; align-items: center; gap: 10px;
     padding: 8px 14px; margin: 0 8px;
     border-radius: var(--r-sm);
-    color: var(--sidebar-text);
+    color: var(--text-2);
     font-size: 13px; cursor: pointer;
     text-decoration: none;
-    transition: background .15s;
+    transition: background .15s, color .15s;
   }
-  .s-item:hover  { background: rgba(255,255,255,.04); color: #fff; text-decoration: none; }
-  .s-item.active { background: rgba(37,99,235,.14); color: #60A5FA; }
-  .s-div { border: none; border-top: 1px solid rgba(255,255,255,.06); margin: 6px 12px; }
+  .s-item:hover  { background: #F1F5F9; color: var(--text); text-decoration: none; }
+  .s-item.active { background: var(--brand-soft); color: var(--brand-text); font-weight: 500; }
+  .s-div { border: none; border-top: 1px solid var(--border); margin: 8px 14px; }
   .s-footer {
-    padding: 14px 20px; font-size: 11px; color: #334155;
-    border-top: 1px solid rgba(255,255,255,.06); margin-top: auto;
+    padding: 14px 22px; font-size: 11px; color: var(--muted);
+    border-top: 1px solid var(--border); margin-top: auto;
   }
 
   .main { flex: 1; min-width: 0; display: flex; flex-direction: column; overflow-y: auto; }
@@ -439,6 +438,22 @@
     .rec-grid, .anatomy-grid { grid-template-columns: 1fr; }
   }
 
+  /* ═══ Top banner (estilo Calculadora Lima Retail) ═══ */
+  .app-banner {
+    background: #fff;
+    padding: 14px 28px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    position: sticky;
+    top: 0;
+    z-index: 20;
+  }
+  .app-banner-title { font-size: 14px; font-weight: 600; color: var(--text); letter-spacing: -.01em; }
+  .app-banner-sep   { width: 1px; height: 18px; background: var(--border); }
+  .app-banner-sub   { font-size: 14px; color: var(--text-2); font-weight: 500; }
+
   /* ═══ Filter bar (rango de fechas) ═══ */
   .filter-bar {
     display: flex; gap: 6px; flex-wrap: wrap;
@@ -605,6 +620,12 @@
 </style>
 </head>
 <body>
+
+<div class="app-banner">
+  <div class="app-banner-title">Lima Retail</div>
+  <div class="app-banner-sep"></div>
+  <div class="app-banner-sub">Plan de Contenidos · Q2 2026</div>
+</div>
 
 <!-- ═══════════════════════════════════════════════════════════════════
      Bloque de DATOS · poblado manualmente desde el PDF de Metricool.
@@ -1180,18 +1201,13 @@
 <div class="shell">
   <!-- ═══════ SIDEBAR ═══════ -->
   <aside class="sidebar">
-    <div class="s-brand">
-      <div class="s-title">Lima Retail</div>
-      <div class="s-sub">Plan de Contenidos · Q2 2026</div>
-    </div>
-
     <div class="s-group-lbl">Diagnóstico</div>
     <a href="#por-canal"         class="s-item">Por canal · IG vs TikTok</a>
     <a href="#hallazgos"         class="s-item">Hallazgos clave</a>
     <a href="#top"               class="s-item">Top contenido</a>
     <a href="#temas-ganchos"     class="s-item">Temas y ganchos</a>
 
-    <div class="s-group-lbl" style="margin-top:14px">Acción</div>
+    <div class="s-group-lbl">Acción</div>
     <a href="#decisiones"        class="s-item">Decisiones estratégicas</a>
     <a href="#formato"           class="s-item">Formato del reel</a>
     <a href="#recomendaciones"   class="s-item">Recomendaciones</a>
