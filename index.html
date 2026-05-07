@@ -1623,6 +1623,25 @@
      RENDER — lee window.METRICS y puebla el dashboard.
      Si no hay datos, muestra "—" y un aviso en el sidebar.
      ═══════════════════════════════════════════════════════════════════ -->
+<!-- Modal: cargar nuevo reporte / cambiar marca -->
+<div class="modal" id="newReportModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal-overlay" data-close-modal></div>
+  <div class="modal-content">
+    <button class="modal-close" data-close-modal aria-label="Cerrar">×</button>
+    <h3 id="modalTitle">Cargar nuevo reporte</h3>
+    <p class="intro">Para cambiar de marca o de periodo, comparte el PDF de Metricool con el asistente:</p>
+    <ol class="modal-steps">
+      <li><b>Exporta el PDF</b> desde Metricool de la marca o periodo nuevo.</li>
+      <li><b>Adjúntalo en el chat</b> de tu sesión de Claude Code (o abre una nueva con el repo <code>jorgeluis666/codex005</code>).</li>
+      <li>El asistente <b>extrae los datos</b>, actualiza <code>window.METRICS</code> y regenera todas las secciones del dashboard.</li>
+      <li>Tras el <code>git push</code>, <b>recarga esta página</b> y verás los datos de la nueva marca.</li>
+    </ol>
+    <div class="modal-meta">
+      El dashboard actual queda guardado en el historial de commits del repo. Si quieres volver a esta versión, basta con hacer <code>git revert</code> al commit que cambió la marca.
+    </div>
+  </div>
+</div>
+
 <script>
 (function() {
   const M = window.METRICS;
@@ -2345,23 +2364,5 @@
   }
 })();
 </script>
-<!-- Modal: cargar nuevo reporte / cambiar marca -->
-<div class="modal" id="newReportModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-  <div class="modal-overlay" data-close-modal></div>
-  <div class="modal-content">
-    <button class="modal-close" data-close-modal aria-label="Cerrar">×</button>
-    <h3 id="modalTitle">Cargar nuevo reporte</h3>
-    <p class="intro">Para cambiar de marca o de periodo, comparte el PDF de Metricool con el asistente:</p>
-    <ol class="modal-steps">
-      <li><b>Exporta el PDF</b> desde Metricool de la marca o periodo nuevo.</li>
-      <li><b>Adjúntalo en el chat</b> de tu sesión de Claude Code (o abre una nueva con el repo <code>jorgeluis666/codex005</code>).</li>
-      <li>El asistente <b>extrae los datos</b>, actualiza <code>window.METRICS</code> y regenera todas las secciones del dashboard.</li>
-      <li>Tras el <code>git push</code>, <b>recarga esta página</b> y verás los datos de la nueva marca.</li>
-    </ol>
-    <div class="modal-meta">
-      El dashboard actual queda guardado en el historial de commits del repo. Si quieres volver a esta versión, basta con hacer <code>git revert</code> al commit que cambió la marca.
-    </div>
-  </div>
-</div>
 </body>
 </html>
