@@ -182,6 +182,41 @@
   .insight.warn { background: #FFFBEB; border-color: var(--amber); color: #78350F; }
   .insight.err  { background: #FEF2F2; border-color: var(--red);   color: #7F1D1D; }
 
+  /* ═══ Findings list (Hallazgos clave · variant limpia con bullets) ═══ */
+  .panel-findings { padding: 6px 22px; }
+  .panel-findings .insight {
+    background: transparent;
+    border-left: none;
+    border-radius: 0;
+    padding: 14px 0 14px 22px;
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text);
+    position: relative;
+    margin: 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .panel-findings .insight + .insight { margin-top: 0; }
+  .panel-findings .insight:last-child { border-bottom: none; }
+  .panel-findings .insight::before {
+    content: '';
+    position: absolute;
+    left: 4px;
+    top: 22px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+  .panel-findings .insight.ok::before    { background: var(--green); }
+  .panel-findings .insight.warn::before  { background: var(--amber); }
+  .panel-findings .insight.err::before   { background: var(--red); }
+  .panel-findings .insight.info::before  { background: var(--brand); }
+  .panel-findings .insight b {
+    filter: none;
+    color: var(--text);
+    font-weight: 600;
+  }
+
   table { width: 100%; border-collapse: collapse; font-size: 12px; }
   th {
     background: #F8FAFC; padding: 9px 12px; text-align: left;
@@ -1300,7 +1335,7 @@
       <section id="hallazgos">
         <div class="sec-lbl">Hallazgos clave</div>
         <div class="sec-desc">Lo que el reporte revela en una mirada — leer antes de tomar decisiones tácticas.</div>
-        <div class="panel">
+        <div class="panel panel-findings">
           <div class="insight ok">
             <b>TikTok es el motor del crecimiento.</b> Interacciones, visualizaciones, alcance/post y publicaciones todas en verde. Es el único canal con todas las métricas creciendo. El Q2 debe doblar la apuesta aquí.
           </div>
