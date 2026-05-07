@@ -702,6 +702,38 @@
     font-size: 13px; font-weight: 600;
     display: flex; align-items: center; justify-content: center;
   }
+  .dropzone {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 8px;
+    padding: 28px 20px;
+    border: 2px dashed var(--border);
+    border-radius: var(--r);
+    background: #F8FAFC;
+    cursor: pointer;
+    transition: border-color .15s, background .15s;
+    margin-bottom: 14px;
+  }
+  .dropzone:hover, .dropzone.drag {
+    border-color: var(--brand);
+    background: var(--brand-soft);
+  }
+  .dz-icon { font-size: 32px; line-height: 1; }
+  .dz-title { font-size: 14px; font-weight: 600; color: var(--text); }
+  .dz-sub   { font-size: 13px; color: var(--text-2); }
+  .dz-status {
+    font-size: 13px; line-height: 1.5;
+    padding: 12px 14px;
+    border-radius: var(--r-sm);
+    margin-bottom: 14px;
+  }
+  .dz-status.info { background: #EFF6FF; color: #1E3A8A; border-left: 3px solid var(--brand); }
+  .dz-status.ok   { background: #ECFDF5; color: #065F46; border-left: 3px solid var(--green); }
+  .dz-status.err  { background: #FEF2F2; color: #7F1D1D; border-left: 3px solid var(--red); }
+  .dz-actions {
+    display: flex; gap: 8px; justify-content: flex-end;
+    margin-bottom: 16px;
+  }
+
   .modal-meta {
     font-size: 12px; color: var(--muted);
     margin-top: 16px; padding-top: 14px;
@@ -1623,27 +1655,41 @@
      RENDER — lee window.METRICS y puebla el dashboard.
      Si no hay datos, muestra "—" y un aviso en el sidebar.
      ═══════════════════════════════════════════════════════════════════ -->
-<!-- Modal: cargar nuevo reporte / cambiar marca -->
+<!-- Modal: cargar nuevo reporte -->
 <div class="modal" id="newReportModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
   <div class="modal-overlay" data-close-modal></div>
   <div class="modal-content">
     <button class="modal-close" data-close-modal aria-label="Cerrar">×</button>
     <h3 id="modalTitle">Cargar nuevo reporte</h3>
-    <p class="intro">Para cambiar de marca o de periodo, comparte el PDF de Metricool con el asistente:</p>
-    <ol class="modal-steps">
-      <li><b>Exporta el PDF</b> desde Metricool de la marca o periodo nuevo.</li>
-      <li><b>Adjúntalo en el chat</b> de tu sesión de Claude Code (o abre una nueva con el repo <code>jorgeluis666/codex005</code>).</li>
-      <li>El asistente <b>extrae los datos</b>, actualiza <code>window.METRICS</code> y regenera todas las secciones del dashboard.</li>
-      <li>Tras el <code>git push</code>, <b>recarga esta página</b> y verás los datos de la nueva marca.</li>
-    </ol>
+    <p class="intro">Sube el PDF de Metricool de la marca o periodo nuevo. Se procesa en tu navegador y los KPIs se actualizan al toque (los datos quedan guardados localmente).</p>
+
+    <label class="dropzone" id="dropzone">
+      <input type="file" id="pdfInput" accept="application/pdf" hidden />
+      <div class="dz-icon">📄</div>
+      <div class="dz-title" id="dzTitle">Arrastra el PDF aquí o click para elegir</div>
+      <div class="dz-sub"  id="dzSub">Formato esperado: Metricool · Social Media Insights</div>
+    </label>
+
+    <div class="dz-status" id="dzStatus" hidden></div>
+
+    <div class="dz-actions">
+      <button class="btn" id="btnReset" hidden>Restaurar dashboard original</button>
+      <button class="btn primary" id="btnProcess" hidden>Procesar PDF</button>
+    </div>
+
     <div class="modal-meta">
-      El dashboard actual queda guardado en el historial de commits del repo. Si quieres volver a esta versión, basta con hacer <code>git revert</code> al commit que cambió la marca.
+      <b>Importante.</b> El cambio queda guardado solo en tu navegador (<code>localStorage</code>). Para publicarlo a todos los que ven el dashboard, comparte el PDF con Claude Code en chat para hacer <code>git push</code>.
     </div>
   </div>
 </div>
 
 <script>
 (function() {
+  // Si hay un reporte cargado en localStorage, usarlo en lugar del inline
+  try {
+    const _saved = localStorage.getItem('codex005_metrics');
+    if (_saved) window.METRICS = JSON.parse(_saved);
+  } catch (e) { /* fallback al inline */ }
   const M = window.METRICS;
   const $ = sel => document.querySelector(sel);
   const $$ = sel => document.querySelectorAll(sel);
@@ -2350,16 +2396,269 @@
     });
   });
 
-  // Botón "Cargar nuevo reporte" → abre modal con instrucciones
-  const _newBtn = $('#btnNewReport');
-  const _modal  = $('#newReportModal');
+  // ═══ Modal "Cargar nuevo reporte" con upload real ═══
+  const _newBtn  = $('#btnNewReport');
+  const _modal   = $('#newReportModal');
+  const _dz      = $('#dropzone');
+  const _input   = $('#pdfInput');
+  const _dzTitle = $('#dzTitle');
+  const _dzSub   = $('#dzSub');
+  const _status  = $('#dzStatus');
+  const _btnProcess = $('#btnProcess');
+  const _btnReset   = $('#btnReset');
+  let _selectedFile = null;
+
   if (_newBtn && _modal) {
-    _newBtn.addEventListener('click', () => _modal.classList.add('open'));
+    _newBtn.addEventListener('click', () => {
+      _modal.classList.add('open');
+      _btnReset.hidden = !localStorage.getItem('codex005_metrics');
+    });
     _modal.querySelectorAll('[data-close-modal]').forEach(el => {
       el.addEventListener('click', () => _modal.classList.remove('open'));
     });
     document.addEventListener('keydown', e => {
       if (e.key === 'Escape') _modal.classList.remove('open');
+    });
+  }
+
+  function setStatus(kind, msg) {
+    if (!_status) return;
+    _status.hidden = false;
+    _status.className = 'dz-status ' + kind;
+    _status.innerHTML = msg;
+  }
+
+  if (_dz) {
+    _dz.addEventListener('click', () => _input && _input.click());
+    ['dragenter','dragover'].forEach(ev => _dz.addEventListener(ev, e => {
+      e.preventDefault(); _dz.classList.add('drag');
+    }));
+    ['dragleave','drop'].forEach(ev => _dz.addEventListener(ev, e => {
+      e.preventDefault(); _dz.classList.remove('drag');
+    }));
+    _dz.addEventListener('drop', e => {
+      const f = e.dataTransfer.files[0];
+      if (f) handleFile(f);
+    });
+  }
+  if (_input) _input.addEventListener('change', e => {
+    const f = e.target.files[0];
+    if (f) handleFile(f);
+  });
+
+  function handleFile(f) {
+    if (f.type !== 'application/pdf' && !f.name.toLowerCase().endsWith('.pdf')) {
+      setStatus('err', '<b>Archivo no válido.</b> Necesito un PDF de Metricool.');
+      return;
+    }
+    _selectedFile = f;
+    _dzTitle.textContent = f.name;
+    _dzSub.textContent = (f.size / 1024 / 1024).toFixed(2) + ' MB · listo para procesar';
+    _btnProcess.hidden = false;
+    setStatus('info', 'Archivo seleccionado. Click <b>Procesar PDF</b> para extraer KPIs.');
+  }
+
+  // Carga pdf.js bajo demanda desde CDN
+  let _pdfjsPromise = null;
+  function loadPdfJs() {
+    if (window.pdfjsLib) return Promise.resolve(window.pdfjsLib);
+    if (_pdfjsPromise) return _pdfjsPromise;
+    _pdfjsPromise = new Promise((resolve, reject) => {
+      const s = document.createElement('script');
+      s.src = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.0.379/pdf.min.js';
+      s.onload = () => {
+        window.pdfjsLib.GlobalWorkerOptions.workerSrc =
+          'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.0.379/pdf.worker.min.js';
+        resolve(window.pdfjsLib);
+      };
+      s.onerror = () => reject(new Error('No se pudo cargar pdf.js desde CDN'));
+      document.head.appendChild(s);
+    });
+    return _pdfjsPromise;
+  }
+
+  async function extractPdfText(file) {
+    const lib = await loadPdfJs();
+    const buf = await file.arrayBuffer();
+    const pdf = await lib.getDocument({ data: buf }).promise;
+    const pages = [];
+    for (let i = 1; i <= pdf.numPages; i++) {
+      const page = await pdf.getPage(i);
+      const tc = await page.getTextContent();
+      pages.push(tc.items.map(it => it.str).filter(s => s !== undefined));
+    }
+    return pages;
+  }
+
+  // Parser de las 4 paginas de KPIs (Seguidores, Impresiones, Interacciones, Publicaciones)
+  function parseNum(s) {
+    if (!s) return null;
+    const m = String(s).match(/^([\d.,]+)\s*(K|M)?$/);
+    if (!m) return null;
+    let n = parseFloat(m[1].replace(/,/g, ''));
+    if (m[2] === 'K') n = Math.round(n * 1000);
+    if (m[2] === 'M') n = Math.round(n * 1000000);
+    return isNaN(n) ? null : n;
+  }
+  function parsePct(s) {
+    if (!s) return null;
+    const m = String(s).match(/^([+-]?[\d.]+)%$/);
+    return m ? parseFloat(m[1]) : null;
+  }
+
+  function parseMetricPage(items) {
+    // items es array de strings (lineas/fragmentos); buscamos pattern
+    // [total][pct] ... Instagram [num][pct] ... Tiktok [num][pct]
+    const lines = items.map(s => String(s).trim()).filter(Boolean);
+    const out = { total: null, total_pct: null, ig: null, ig_pct: null, tt: null, tt_pct: null };
+
+    // Buscar primer numero seguido de %
+    for (let i = 0; i < lines.length - 1; i++) {
+      const n = parseNum(lines[i]);
+      const p = parsePct(lines[i+1]);
+      if (n !== null && p !== null) { out.total = n; out.total_pct = p; break; }
+    }
+
+    const igIdx = lines.findIndex(l => l === 'Instagram');
+    if (igIdx >= 0) {
+      for (let j = igIdx + 1; j < Math.min(igIdx + 4, lines.length - 1); j++) {
+        const n = parseNum(lines[j]);
+        const p = parsePct(lines[j+1]);
+        if (n !== null && p !== null) { out.ig = n; out.ig_pct = p; break; }
+      }
+    }
+    const ttIdx = lines.findIndex(l => /^Tiktok$/i.test(l));
+    if (ttIdx >= 0) {
+      for (let j = ttIdx + 1; j < Math.min(ttIdx + 4, lines.length - 1); j++) {
+        const n = parseNum(lines[j]);
+        const p = parsePct(lines[j+1]);
+        if (n !== null && p !== null) { out.tt = n; out.tt_pct = p; break; }
+      }
+    }
+    return out;
+  }
+
+  // Detecta cual de las 4 paginas-metric es esta
+  function metricPageType(items) {
+    const text = items.join(' ').toLowerCase();
+    if (text.includes('seguidores'))    return 'followers';
+    if (text.includes('impresiones'))   return 'impressions';
+    if (text.includes('interacciones')) return 'interactions';
+    if (text.includes('publicaciones')) return 'posts';
+    return null;
+  }
+
+  function parseCoverPage(items) {
+    const text = items.join(' ');
+    const m = text.match(/(\d{2}\s+\w+\s+\d{2,4})\s*-\s*(\d{2}\s+\w+\s+\d{2,4})/);
+    const handle = (items.find(s => /^@?[a-z0-9_.]{3,30}$/i.test(s) && s.length > 4) || '').replace(/^@?/, '@');
+    return {
+      from: m ? spDate(m[1]) : null,
+      to:   m ? spDate(m[2]) : null,
+      handle: handle || null
+    };
+  }
+  function spDate(s) {
+    // "01 ene 26" -> "2026-01-01"
+    const months = { ene:'01', feb:'02', mar:'03', abr:'04', may:'05', jun:'06', jul:'07', ago:'08', sep:'09', oct:'10', nov:'11', dic:'12' };
+    const m = String(s).trim().toLowerCase().match(/(\d{1,2})\s+(\w+)\s+(\d{2,4})/);
+    if (!m) return null;
+    const yy = m[3].length === 2 ? '20' + m[3] : m[3];
+    const mm = months[m[2].slice(0,3)] || '01';
+    const dd = m[1].padStart(2, '0');
+    return `${yy}-${mm}-${dd}`;
+  }
+
+  function buildMetricsFromParse(pagesText) {
+    const cover = parseCoverPage(pagesText[0] || []);
+    const result = {
+      meta: {
+        from: cover.from || M.meta.from,
+        to: cover.to || M.meta.to,
+        days: null,
+        generated_at: new Date().toISOString().slice(0, 19),
+        source: 'parsed-from-pdf-browser',
+        brand: M.meta.brand,
+        handle: cover.handle || M.meta.handle
+      },
+      summary: { ...M.summary },
+      instagram: { ...M.instagram },
+      tiktok: { ...M.tiktok },
+      top_posts: M.top_posts.slice(),  // mantener top_posts del periodo anterior
+      recommendations: M.recommendations
+    };
+    if (result.meta.from && result.meta.to) {
+      const d1 = new Date(result.meta.from), d2 = new Date(result.meta.to);
+      result.meta.days = Math.round((d2 - d1) / 86400000) + 1;
+    }
+
+    // Recorre paginas, identifica las 4 paginas-metric y actualiza summary + ig + tt
+    let foundMetrics = 0;
+    for (let i = 0; i < Math.min(pagesText.length, 8); i++) {
+      const items = pagesText[i];
+      const type = metricPageType(items);
+      if (!type) continue;
+      const parsed = parseMetricPage(items);
+      if (parsed.total === null) continue;
+      foundMetrics++;
+
+      result.summary[type] = { total: parsed.total, change_pct: parsed.total_pct };
+
+      if (type === 'followers') {
+        result.instagram.followers = parsed.ig;
+        result.instagram.followers_change_pct = parsed.ig_pct;
+        result.tiktok.followers = parsed.tt;
+        result.tiktok.followers_change_pct = parsed.tt_pct;
+      } else if (type === 'impressions') {
+        result.instagram.impressions = parsed.ig;
+        result.instagram.impressions_change_pct = parsed.ig_pct;
+        result.tiktok.views = parsed.tt;
+        result.tiktok.views_change_pct = parsed.tt_pct;
+      } else if (type === 'interactions') {
+        result.instagram.interactions = parsed.ig;
+        result.instagram.interactions_change_pct = parsed.ig_pct;
+        result.tiktok.interactions = parsed.tt;
+        result.tiktok.interactions_change_pct = parsed.tt_pct;
+      } else if (type === 'posts') {
+        result.instagram.posts = parsed.ig;
+        result.instagram.posts_change_pct = parsed.ig_pct;
+        result.tiktok.posts = parsed.tt;
+        result.tiktok.posts_change_pct = parsed.tt_pct;
+      }
+    }
+
+    return { metrics: result, foundMetrics };
+  }
+
+  if (_btnProcess) {
+    _btnProcess.addEventListener('click', async () => {
+      if (!_selectedFile) return;
+      _btnProcess.disabled = true;
+      setStatus('info', '<b>Procesando…</b> cargando pdf.js y extrayendo texto…');
+      try {
+        const pages = await extractPdfText(_selectedFile);
+        const { metrics, foundMetrics } = buildMetricsFromParse(pages);
+        if (foundMetrics === 0) {
+          setStatus('err', '<b>No reconocí el formato.</b> ¿Es un PDF de Metricool? Si lo es, comparte el archivo con Claude Code para procesarlo manualmente.');
+          _btnProcess.disabled = false;
+          return;
+        }
+        localStorage.setItem('codex005_metrics', JSON.stringify(metrics));
+        setStatus('ok', '<b>✓ Procesado.</b> Se actualizaron ' + foundMetrics + ' páginas de KPIs. Recargando…<br/><small>El top contenido y las recomendaciones quedan del periodo anterior — para regenerarlos completos comparte el PDF con Claude Code en chat.</small>');
+        setTimeout(() => window.location.reload(), 1800);
+      } catch (e) {
+        console.error(e);
+        setStatus('err', '<b>Error procesando el PDF.</b> ' + (e.message || '') + '<br/>Si el problema persiste, comparte el PDF con Claude Code en chat.');
+        _btnProcess.disabled = false;
+      }
+    });
+  }
+
+  if (_btnReset) {
+    _btnReset.addEventListener('click', () => {
+      if (!confirm('¿Restaurar el dashboard al reporte original? Se borrarán los datos cargados localmente.')) return;
+      localStorage.removeItem('codex005_metrics');
+      window.location.reload();
     });
   }
 })();
