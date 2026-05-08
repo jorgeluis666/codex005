@@ -753,9 +753,9 @@
 <body>
 
 <div class="app-banner">
-  <div class="app-banner-title">Lima Retail</div>
+  <div class="app-banner-title" id="brandTitle">Lima Retail</div>
   <div class="app-banner-sep"></div>
-  <div class="app-banner-sub">Plan de Contenidos · Q2 2026</div>
+  <div class="app-banner-sub" id="brandSubtitle">Plan de Contenidos · Q2 2026</div>
 </div>
 
 <!-- ═══════════════════════════════════════════════════════════════════
@@ -1390,7 +1390,7 @@
             <div class="ch-head">
               <div>
                 <div class="ch-name">Instagram</div>
-                <div class="panel-sub">@agencialimaretail</div>
+                <div class="panel-sub ig-handle">@agencialimaretail</div>
               </div>
               <span class="pill" id="ig-status">—</span>
             </div>
@@ -1408,7 +1408,7 @@
             <div class="ch-head">
               <div>
                 <div class="ch-name">TikTok</div>
-                <div class="panel-sub">@agencialimaretail</div>
+                <div class="panel-sub tt-handle">@agencialimaretail</div>
               </div>
               <span class="pill" id="tt-status">—</span>
             </div>
@@ -1740,6 +1740,17 @@
     M.meta.source === 'manual-from-pdf' ? 'manual' : 'stale'
   );
   $('#brand-pill').textContent = M.meta.handle || '@agencialimaretail';
+
+  // Banner + handles bindeados a M.meta
+  const _brandTitle = $('#brandTitle');
+  if (_brandTitle && M.meta.brand) _brandTitle.textContent = M.meta.brand;
+  const _brandSubtitle = $('#brandSubtitle');
+  if (_brandSubtitle) {
+    _brandSubtitle.textContent = `Plan de Contenidos · ${M.meta.from || ''} → ${M.meta.to || ''}`;
+  }
+  if (M.meta.handle) {
+    $$('.ig-handle, .tt-handle').forEach(el => el.textContent = M.meta.handle);
+  }
 
   // KPIs y ch-rows: data-m y data-trend
   $$('[data-m]').forEach(el => {
@@ -2507,34 +2518,40 @@
   }
 
   function parseMetricPage(items) {
-    // items es array de strings (lineas/fragmentos); buscamos pattern
-    // [total][pct] ... Instagram [num][pct] ... Tiktok [num][pct]
+    // Robust parser: busca (num, pct) pairs, asocia segun labels Instagram/Tiktok
     const lines = items.map(s => String(s).trim()).filter(Boolean);
     const out = { total: null, total_pct: null, ig: null, ig_pct: null, tt: null, tt_pct: null };
 
-    // Buscar primer numero seguido de %
-    for (let i = 0; i < lines.length - 1; i++) {
-      const n = parseNum(lines[i]);
-      const p = parsePct(lines[i+1]);
-      if (n !== null && p !== null) { out.total = n; out.total_pct = p; break; }
+    function findPair(from, to) {
+      for (let i = from; i < Math.min(to, lines.length - 1); i++) {
+        const n = parseNum(lines[i]);
+        const p = parsePct(lines[i+1]);
+        if (n !== null && p !== null) return { n, p, idx: i };
+      }
+      return null;
     }
 
-    const igIdx = lines.findIndex(l => l === 'Instagram');
+    const igIdx = lines.findIndex(l => /^instagram\b/i.test(l));
+    const ttIdx = lines.findIndex(l => /^tiktok\b/i.test(l));
+
+    const beforeChannels = Math.min(
+      igIdx >= 0 ? igIdx : Infinity,
+      ttIdx >= 0 ? ttIdx : Infinity
+    );
+    const totalPair = findPair(0, beforeChannels);
+    if (totalPair) { out.total = totalPair.n; out.total_pct = totalPair.p; }
+
     if (igIdx >= 0) {
-      for (let j = igIdx + 1; j < Math.min(igIdx + 4, lines.length - 1); j++) {
-        const n = parseNum(lines[j]);
-        const p = parsePct(lines[j+1]);
-        if (n !== null && p !== null) { out.ig = n; out.ig_pct = p; break; }
-      }
+      const stop = (ttIdx > igIdx) ? ttIdx : Infinity;
+      const igPair = findPair(igIdx + 1, stop);
+      if (igPair) { out.ig = igPair.n; out.ig_pct = igPair.p; }
     }
-    const ttIdx = lines.findIndex(l => /^Tiktok$/i.test(l));
     if (ttIdx >= 0) {
-      for (let j = ttIdx + 1; j < Math.min(ttIdx + 4, lines.length - 1); j++) {
-        const n = parseNum(lines[j]);
-        const p = parsePct(lines[j+1]);
-        if (n !== null && p !== null) { out.tt = n; out.tt_pct = p; break; }
-      }
+      const stop = (igIdx > ttIdx) ? igIdx : Infinity;
+      const ttPair = findPair(ttIdx + 1, stop);
+      if (ttPair) { out.tt = ttPair.n; out.tt_pct = ttPair.p; }
     }
+
     return out;
   }
 
@@ -2551,11 +2568,21 @@
   function parseCoverPage(items) {
     const text = items.join(' ');
     const m = text.match(/(\d{2}\s+\w+\s+\d{2,4})\s*-\s*(\d{2}\s+\w+\s+\d{2,4})/);
-    const handle = (items.find(s => /^@?[a-z0-9_.]{3,30}$/i.test(s) && s.length > 4) || '').replace(/^@?/, '@');
+    const handle = (items.find(s => /^@?[a-z0-9_.]{3,30}$/i.test(s) && s.length > 4 && !/^\d/.test(s)) || '').replace(/^@?/, '@');
+    const brand = items.find(s =>
+      s && s.length > 3 && s.length < 60 &&
+      !/^Social Media/i.test(s) &&
+      !/^Insights$/i.test(s) &&
+      !/^@/.test(s) &&
+      !/^\d/.test(s) &&
+      /[a-záéíóúñ]/i.test(s) &&
+      / /.test(s)
+    );
     return {
-      from: m ? spDate(m[1]) : null,
-      to:   m ? spDate(m[2]) : null,
-      handle: handle || null
+      from:   m ? spDate(m[1]) : null,
+      to:     m ? spDate(m[2]) : null,
+      handle: handle || null,
+      brand:  brand || null
     };
   }
   function spDate(s) {
@@ -2578,7 +2605,7 @@
         days: null,
         generated_at: new Date().toISOString().slice(0, 19),
         source: 'parsed-from-pdf-browser',
-        brand: M.meta.brand,
+        brand: cover.brand || M.meta.brand,
         handle: cover.handle || M.meta.handle
       },
       summary: { ...M.summary },
@@ -2637,6 +2664,7 @@
       setStatus('info', '<b>Procesando…</b> cargando pdf.js y extrayendo texto…');
       try {
         const pages = await extractPdfText(_selectedFile);
+        try { localStorage.setItem('codex005_pdf_raw', JSON.stringify(pages.slice(0, 8))); } catch(e) {}
         const { metrics, foundMetrics } = buildMetricsFromParse(pages);
         if (foundMetrics === 0) {
           setStatus('err', '<b>No reconocí el formato.</b> ¿Es un PDF de Metricool? Si lo es, comparte el archivo con Claude Code para procesarlo manualmente.');
@@ -2644,8 +2672,12 @@
           return;
         }
         localStorage.setItem('codex005_metrics', JSON.stringify(metrics));
-        setStatus('ok', '<b>✓ Procesado.</b> Se actualizaron ' + foundMetrics + ' páginas de KPIs. Recargando…<br/><small>El top contenido y las recomendaciones quedan del periodo anterior — para regenerarlos completos comparte el PDF con Claude Code en chat.</small>');
-        setTimeout(() => window.location.reload(), 1800);
+        const partial = foundMetrics < 4;
+        const msg = partial
+          ? '<b>⚠ Parseo parcial:</b> ' + foundMetrics + ' de 4 KPIs principales. Las que faltan quedan del periodo anterior. Para datos completos, comparte el PDF con Claude Code en chat.<br/><small>Recargando…</small>'
+          : '<b>✓ Procesado.</b> Se actualizaron los 4 KPIs principales. Top contenido y recomendaciones quedan del periodo anterior.<br/><small>Recargando…</small>';
+        setStatus(partial ? 'info' : 'ok', msg);
+        setTimeout(() => window.location.reload(), 2400);
       } catch (e) {
         console.error(e);
         setStatus('err', '<b>Error procesando el PDF.</b> ' + (e.message || '') + '<br/>Si el problema persiste, comparte el PDF con Claude Code en chat.');
