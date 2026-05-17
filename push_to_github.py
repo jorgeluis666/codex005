@@ -1,7 +1,7 @@
 """
-Codex 005 · Push prompt to GitHub
-─────────────────────────────────
-Sube `prompts/reels_estrategia.txt` al repo `jorgeluis666/codex005`.
+Metricool Report · Push prompt to GitHub
+─────────────────────────────────────────
+Sube `prompts/reels_estrategia.txt` al repo `jorgeluis666/metricool-report`.
 
 Uso:
     1. Configura tu Personal Access Token con permisos `repo`:
@@ -19,7 +19,7 @@ from pathlib import Path
 
 from github import Github, GithubException
 
-REPO        = "jorgeluis666/codex005"
+REPO        = "jorgeluis666/metricool-report"
 LOCAL_FILE  = Path(__file__).parent / "prompts" / "reels_estrategia.txt"
 REMOTE_PATH = "prompts/reels_estrategia.txt"
 COMMIT_MSG  = "Añadir prompt para estrategia de reels"

@@ -3,184 +3,42 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Plan de Contenidos · Lima Retail · Q2 2026</title>
+<title>Metricool Report · Lima Retail · Q2 2026</title>
 <link rel="stylesheet" href="lima-retail-ds.css" />
 
 <style>
-  /* ═══ Lima Retail Design System (inlined for self-contained preview) ═══ */
-  :root {
-    --sidebar-bg:    #0F172A;
-    --sidebar-text:  #CBD5E1;
-    --sidebar-muted: #475569;
-    --bg:            #F3F4F6;
-    --card:          #FFFFFF;
-    --border:        #E2E8F0;
+  /* ═══ Overrides sobre lima-retail-ds.css + CSS específico de esta página ═══ */
+  /* El DS base está en lima-retail-ds.css (enlazado en <head>).              */
+  /* Aquí solo van: overrides de tamaño/tema y clases exclusivas del dashboard.*/
 
-    --brand:         #2563EB;   --brand-soft:  #DBEAFE;   --brand-text:  #1D4ED8;
-    --green:         #059669;   --green-soft:  #D1FAE5;   --green-text:  #047857;
-    --amber:         #D97706;   --amber-soft:  #FEF3C7;   --amber-text:  #B45309;
-    --red:           #DC2626;   --red-soft:    #FEE2E2;   --red-text:    #B91C1C;
-    --purple:        #7C3AED;   --purple-soft: #EDE9FE;   --purple-text: #6D28D9;
+  /* Override: base font (DS=13px; este dashboard usa 14px) */
+  body { font-size: 14px; line-height: 1.55; }
 
-    --text:          #0F172A;
-    --text-2:        #475569;
-    --muted:         #94A3B8;
-
-    --font: -apple-system, BlinkMacSystemFont, "Segoe UI", "Inter", Helvetica, sans-serif;
-
-    --r-lg:  14px;
-    --r:     12px;
-    --r-sm:   8px;
-    --r-xs:   6px;
-
-    --sh:       0 1px 3px  rgba(15,23,42,.06);
-    --sh2:      0 4px 14px rgba(15,23,42,.08);
-  }
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html, body { height: 100%; }
-  body {
-    font-family: var(--font);
-    background: var(--bg);
-    color: var(--text);
-    font-size: 14px;
-    line-height: 1.55;
-  }
-  button, input, select, textarea { font-family: inherit; }
-  a { color: var(--brand); text-decoration: none; }
-  a:hover { text-decoration: underline; }
-
-  .shell { min-height: 100vh; display: flex; }
-
-  .sidebar {
-    width: 240px;
-    background: var(--sidebar-bg);
-    color: var(--sidebar-text);
-    flex-shrink: 0;
-    display: flex;
-    flex-direction: column;
-    position: sticky;
-    top: 49px;
-    max-height: calc(100vh - 49px);
-    overflow-y: auto;
-    border-right: 1px solid var(--border);
-  }
-  .s-group-lbl {
-    font-size: 10px; text-transform: uppercase; color: var(--muted);
-    letter-spacing: .08em; padding: 18px 22px 8px; font-weight: 600;
-  }
-  .s-group-lbl:first-of-type { padding-top: 22px; }
-  .s-item {
-    display: flex; align-items: center; gap: 10px;
-    padding: 8px 14px; margin: 0 8px;
-    border-radius: var(--r-sm);
-    color: var(--text-2);
-    font-size: 14px; cursor: pointer;
-    text-decoration: none;
-    transition: background .15s, color .15s;
-  }
+  /* Sidebar: override top/max-height por el .app-banner fijo (49px) + border */
+  .sidebar { top: 49px; max-height: calc(100vh - 49px); border-right: 1px solid var(--border); }
+  /* Sidebar nav items: tema claro sobre fondo oscuro (override del DS dark-theme) */
+  .s-item { color: var(--text-2); font-size: 14px; text-decoration: none; transition: background .15s, color .15s; }
   .s-item:hover  { background: #F1F5F9; color: var(--text); text-decoration: none; }
   .s-item.active { background: var(--brand-soft); color: var(--brand-text); font-weight: 500; }
-  .s-div { border: none; border-top: 1px solid var(--border); margin: 8px 14px; }
-  .s-footer {
-    padding: 14px 22px; font-size: 13px; color: var(--muted);
-    border-top: 1px solid var(--border); margin-top: auto;
-  }
 
-  .main { flex: 1; min-width: 0; display: flex; flex-direction: column; overflow-y: auto; }
-
-  .topbar {
-    padding: 18px 28px;
-    background: #fff;
-    border-bottom: 1px solid var(--border);
-    display: flex; align-items: flex-start; justify-content: space-between;
-    gap: 16px; flex-wrap: wrap;
-  }
-  .topbar-title { font-size: 17px; font-weight: 600; letter-spacing: -.01em; }
-  .topbar-sub   { font-size: 14px; color: var(--text-2); margin-top: 4px; display: flex; gap: 8px; flex-wrap: wrap; }
-  .topbar-pill {
-    display: inline-flex; align-items: center; gap: 5px;
-    background: #F1F5F9; border-radius: 20px;
-    padding: 2px 10px; font-size: 13px; color: var(--text-2);
-  }
+  /* Override topbar-sub/pill: DS usa 12px/11px, este dashboard usa 14px/13px */
+  .topbar-sub  { font-size: 14px; }
+  .topbar-pill { font-size: 13px; }
   .topbar-pill.live   { background: var(--green-soft); color: var(--green-text); }
   .topbar-pill.stale  { background: var(--amber-soft); color: var(--amber-text); }
   .topbar-pill.manual { background: #F1F5F9; color: var(--text-2); }
-  .topbar-actions { display: flex; gap: 8px; flex-wrap: wrap; }
 
-  .content { padding: 22px 28px; display: flex; flex-direction: column; gap: 22px; }
+  /* Override btn: DS usa 12px, este dashboard usa 14px */
+  .btn { font-size: 14px; }
 
-  .btn {
-    display: inline-flex; align-items: center; gap: 6px;
-    padding: 7px 14px;
-    border: 1px solid var(--border);
-    border-radius: var(--r-sm);
-    background: #fff;
-    font-size: 14px; font-weight: 500; color: var(--text-2);
-    cursor: pointer; white-space: nowrap;
-  }
-  .btn:hover { background: #F8FAFC; }
-  .btn.primary { background: var(--brand); color: #fff; border-color: var(--brand); }
-  .btn.primary:hover { background: var(--brand-text); }
+  /* Override panel-sub: DS usa 11px, aquí se usa 13px */
+  .panel-sub { font-size: 13px; }
 
-  .panel {
-    background: var(--card); border: 1px solid var(--border);
-    border-radius: var(--r); padding: 18px 20px; box-shadow: var(--sh);
-  }
-  .panel-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 14px; flex-wrap: wrap; }
-  .panel-title { font-size: 14px; font-weight: 600; letter-spacing: -.01em; }
-  .panel-sub   { font-size: 13px; color: var(--muted); margin-top: 2px; }
+  /* Override kpi-sub: DS usa 11px, aquí se usa 13px */
+  .kpi-sub { font-size: 13px; margin-top: 2px; }
 
-  .kpi-grid   { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
-  .kpi-grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
-  .kpi-card {
-    background: var(--card); border: 1px solid var(--border);
-    border-radius: var(--r); padding: 16px 18px; box-shadow: var(--sh);
-    position: relative;
-  }
-  .kpi-icon {
-    position: absolute; top: 14px; right: 14px;
-    width: 32px; height: 32px; border-radius: var(--r-sm);
-    display: flex; align-items: center; justify-content: center;
-  }
-  .kpi-icon.blue   { background: var(--brand-soft);  color: var(--brand-text); }
-  .kpi-icon.green  { background: var(--green-soft);  color: var(--green-text); }
-  .kpi-icon.amber  { background: var(--amber-soft);  color: var(--amber-text); }
-  .kpi-icon.red    { background: var(--red-soft);    color: var(--red-text); }
-  .kpi-icon.purple { background: var(--purple-soft); color: var(--purple-text); }
-  .kpi-lbl { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); padding-right: 42px; }
-  .kpi-val { font-size: 24px; font-weight: 600; margin-top: 6px; letter-spacing: -.02em; line-height: 1; }
-  .kpi-val.blue   { color: var(--brand); }
-  .kpi-val.green  { color: var(--green); }
-  .kpi-val.amber  { color: var(--amber); }
-  .kpi-val.red    { color: var(--red); }
-  .kpi-trend { font-size: 13px; font-weight: 600; margin-top: 6px; }
-  .kpi-trend.up   { color: var(--green); }
-  .kpi-trend.down { color: var(--red); }
-  .kpi-trend.flat { color: var(--muted); }
-  .kpi-sub { font-size: 13px; color: var(--muted); margin-top: 2px; }
-
-  .pill {
-    font-size: 10px; font-weight: 600; padding: 3px 9px;
-    border-radius: 20px; display: inline-flex; align-items: center; gap: 4px;
-    white-space: nowrap;
-  }
-  .pill.blue   { background: var(--brand-soft);  color: var(--brand-text); }
-  .pill.green  { background: var(--green-soft);  color: var(--green-text); }
-  .pill.amber  { background: var(--amber-soft);  color: var(--amber-text); }
-  .pill.red    { background: var(--red-soft);    color: var(--red-text); }
-  .pill.purple { background: var(--purple-soft); color: var(--purple-text); }
-  .pill.gray   { background: #F1F5F9;            color: #475569; }
-
-  .insight {
-    border-left: 3px solid; border-radius: var(--r-xs);
-    padding: 10px 14px; font-size: 14px; line-height: 1.55;
-  }
-  .insight + .insight { margin-top: 8px; }
-  .insight b { filter: brightness(.75); }
-  .insight.info { background: #EFF6FF; border-color: var(--brand); color: #1E3A8A; }
-  .insight.ok   { background: #ECFDF5; border-color: var(--green); color: #065F46; }
-  .insight.warn { background: #FFFBEB; border-color: var(--amber); color: #78350F; }
-  .insight.err  { background: #FEF2F2; border-color: var(--red);   color: #7F1D1D; }
+  /* Override insight: DS usa 12px, este dashboard usa 14px */
+  .insight { font-size: 14px; }
 
   /* ═══ Findings list (Hallazgos clave · variant limpia con bullets) ═══ */
   .panel-findings { padding: 6px 22px; }
@@ -217,19 +75,8 @@
     font-weight: 600;
   }
 
-  table { width: 100%; border-collapse: collapse; font-size: 14px; }
-  th {
-    background: #F8FAFC; padding: 9px 12px; text-align: left;
-    font-size: 10px; font-weight: 600; text-transform: uppercase;
-    letter-spacing: .06em; color: var(--text-2);
-    border-bottom: 1px solid var(--border); white-space: nowrap;
-  }
-  td { padding: 10px 12px; border-bottom: 1px solid #F1F5F9; color: var(--text); }
-  tr:last-child td { border-bottom: none; }
-  tr:hover td { background: #FAFBFC; }
-  td.r, th.r { text-align: right; }
-  td.c, th.c { text-align: center; }
-  .table-wrap { overflow-x: auto; }
+  /* Override tabla: DS usa 12px, este dashboard usa 14px */
+  table { font-size: 14px; }
 
   .sec-lbl {
     font-size: 10px; font-weight: 600; letter-spacing: .08em;
@@ -271,42 +118,6 @@
   .ch-trend.up   { color: var(--green); }
   .ch-trend.down { color: var(--red); }
   .ch-trend.flat { color: var(--muted); }
-
-  .axis-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
-  .axis-card {
-    border: 1px solid var(--border); border-radius: var(--r);
-    padding: 16px 18px; box-shadow: var(--sh);
-    background: var(--card); position: relative; overflow: hidden;
-  }
-  .axis-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
-  .ax-blue::before  { background: var(--brand); }
-  .ax-amber::before { background: var(--amber); }
-  .ax-green::before { background: var(--green); }
-  .axis-num { font-size: 10px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
-  .axis-title { font-size: 14px; font-weight: 600; margin-bottom: 6px; letter-spacing: -.01em; }
-  .axis-meta  { font-size: 14px; color: var(--text-2); line-height: 1.55; margin-bottom: 8px; }
-  .axis-share { font-size: 13px; font-weight: 600; }
-  .ax-blue .axis-share  { color: var(--brand); }
-  .ax-amber .axis-share { color: var(--amber); }
-  .ax-green .axis-share { color: var(--green); }
-
-  .cal-day  { font-weight: 600; color: var(--text); white-space: nowrap; }
-  .cal-empty { color: var(--muted); font-style: italic; }
-
-  .action-list { list-style: none; padding: 0; margin: 0; counter-reset: act; }
-  .action-list li {
-    counter-increment: act; position: relative;
-    padding: 12px 14px 12px 46px;
-    background: #F8FAFC; border-radius: var(--r-sm);
-    margin-bottom: 8px; font-size: 14px; color: var(--text); line-height: 1.5;
-  }
-  .action-list li::before {
-    content: counter(act); position: absolute;
-    left: 12px; top: 12px; width: 22px; height: 22px;
-    border-radius: 50%; background: var(--brand-soft); color: var(--brand-text);
-    font-size: 13px; font-weight: 600;
-    display: flex; align-items: center; justify-content: center;
-  }
 
   .tc-text { font-size: 14px; color: var(--text-2); max-width: 360px; line-height: 1.45; }
   .tc-platform-ig { color: #C026D3; font-weight: 600; font-size: 10px; text-transform: uppercase; letter-spacing: .06em; }
@@ -745,7 +556,7 @@
     .shell    { flex-direction: column; }
     .sidebar  { width: 100%; position: relative; max-height: none; }
     .topbar, .content { padding: 16px 18px; }
-    .kpi-grid, .kpi-grid-2, .ch-grid, .axis-grid { grid-template-columns: 1fr; }
+    .kpi-grid, .kpi-grid-2, .ch-grid { grid-template-columns: 1fr; }
     .matrix-grid { grid-template-columns: 1fr 1fr; }
   }
 </style>
@@ -1331,9 +1142,9 @@
 
 <div class="shell">
   <!-- ═══════ SIDEBAR ═══════ -->
-  <aside class="sidebar">
+  <aside class="sidebar" role="navigation" aria-label="Navegación del dashboard">
     <div class="s-group-lbl">Diagnóstico</div>
-    <a href="#por-canal"         class="s-item">Por canal · IG vs TikTok</a>
+    <a href="#por-canal"         class="s-item active" aria-current="page">Por canal · IG vs TikTok</a>
     <a href="#hallazgos"         class="s-item">Hallazgos clave</a>
     <a href="#top"               class="s-item">Top contenido</a>
     <a href="#temas-ganchos"     class="s-item">Temas y ganchos</a>
@@ -1354,7 +1165,7 @@
     </div>
 
     <div class="s-footer">
-      Codex 005 · v0.3<br/>
+      Metricool Report · v0.3<br/>
       <span id="todayStr"></span>
     </div>
   </aside>
@@ -1687,7 +1498,7 @@
 (function() {
   // Si hay un reporte cargado en localStorage, usarlo en lugar del inline
   try {
-    const _saved = localStorage.getItem('codex005_metrics');
+    const _saved = localStorage.getItem('metricool_report_metrics');
     if (_saved) window.METRICS = JSON.parse(_saved);
   } catch (e) { /* fallback al inline */ }
   const M = window.METRICS;
@@ -1766,7 +1577,6 @@
   });
 
   // Status pills (IG/TT)
-  const igTrend = M.summary && M.summary.impressions && M.summary.impressions.change_pct;
   const igStatus = $('#ig-status');
   if (igStatus) {
     const igDown = (M.instagram.impressions_change_pct || 0) < -10;
@@ -2402,8 +2212,9 @@
       if (!target) return;
       e.preventDefault();
       target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      $$('.sidebar a[href^="#"]').forEach(x => x.classList.remove('active'));
+      $$('.sidebar a[href^="#"]').forEach(x => { x.classList.remove('active'); x.removeAttribute('aria-current'); });
       link.classList.add('active');
+      link.setAttribute('aria-current', 'page');
     });
   });
 
@@ -2422,7 +2233,7 @@
   if (_newBtn && _modal) {
     _newBtn.addEventListener('click', () => {
       _modal.classList.add('open');
-      _btnReset.hidden = !localStorage.getItem('codex005_metrics');
+      _btnReset.hidden = !localStorage.getItem('metricool_report_metrics');
     });
     _modal.querySelectorAll('[data-close-modal]').forEach(el => {
       el.addEventListener('click', () => _modal.classList.remove('open'));
@@ -2664,14 +2475,14 @@
       setStatus('info', '<b>Procesando…</b> cargando pdf.js y extrayendo texto…');
       try {
         const pages = await extractPdfText(_selectedFile);
-        try { localStorage.setItem('codex005_pdf_raw', JSON.stringify(pages.slice(0, 8))); } catch(e) {}
+        try { localStorage.setItem('metricool_report_pdf_raw', JSON.stringify(pages.slice(0, 8))); } catch(e) {}
         const { metrics, foundMetrics } = buildMetricsFromParse(pages);
         if (foundMetrics === 0) {
           setStatus('err', '<b>No reconocí el formato.</b> ¿Es un PDF de Metricool? Si lo es, comparte el archivo con Claude Code para procesarlo manualmente.');
           _btnProcess.disabled = false;
           return;
         }
-        localStorage.setItem('codex005_metrics', JSON.stringify(metrics));
+        localStorage.setItem('metricool_report_metrics', JSON.stringify(metrics));
         const partial = foundMetrics < 4;
         const msg = partial
           ? '<b>⚠ Parseo parcial:</b> ' + foundMetrics + ' de 4 KPIs principales. Las que faltan quedan del periodo anterior. Para datos completos, comparte el PDF con Claude Code en chat.<br/><small>Recargando…</small>'
@@ -2689,7 +2500,7 @@
   if (_btnReset) {
     _btnReset.addEventListener('click', () => {
       if (!confirm('¿Restaurar el dashboard al reporte original? Se borrarán los datos cargados localmente.')) return;
-      localStorage.removeItem('codex005_metrics');
+      localStorage.removeItem('metricool_report_metrics');
       window.location.reload();
     });
   }
